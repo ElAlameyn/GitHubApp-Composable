@@ -1,6 +1,6 @@
 //
 //  WebView.swift
-//  GitHub_Finder_Composable
+//  AuthorizationFeature_Finder_Composable
 //
 //  Created by Артем Калинкин on 19.12.2022.
 //

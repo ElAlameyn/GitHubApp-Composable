@@ -1,6 +1,6 @@
 //
 //  TokenResponse.swift
-//  GitHub_Finder_Composable
+//  AuthorizationFeature_Finder_Composable
 //
 //  Created by Артем Калинкин on 19.12.2022.
 //
@@ -16,4 +16,12 @@ struct TokenResponse: Codable {
     case scope
     case tokenType = "token_type"
   }
+}
+
+extension TokenResponse {
+  static let mock = Self(
+    accessToken: "",
+    scope: "",
+    tokenType: ""
+  )
 }

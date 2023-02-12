@@ -14,7 +14,7 @@ struct Users: Equatable {}
 struct GitHub: ReducerProtocol {
 
   struct State: Equatable {
-    @BindableState var isAuthorized: Bool = false
+    @BindingState var isAuthorized: Bool = false
     var users: [Users] = []
     var isWebViewPresented: Bool = false
     var creds: Credentials = .init()
@@ -33,7 +33,7 @@ struct GitHub: ReducerProtocol {
     case isWebViewDismissed
   }
 
-  @Dependency(\.apiClient) var apiClient
+  @Dependency(\.gitHubClient) var gitHubClient
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
     switch action {
@@ -44,11 +44,12 @@ struct GitHub: ReducerProtocol {
         state.isWebViewPresented = false
       case let .tokenRequest(code: code, creds: creds):
         return .run { send in
-          async let value = apiClient.requestToken(
-            ApiClient.MoyaService.tokenWith(code: code, creds: creds)
-            , TokenResponse.self
-          )
-          await send(.authorized(await value != nil))
+          async let value = gitHubClient
+            .requestToken(
+              .tokenWith(code: code, creds: creds)
+            )
+
+          await send(.authorized(try value.get() != nil))
         }
         case .isWebViewDismissed: state.isWebViewPresented = false
     }

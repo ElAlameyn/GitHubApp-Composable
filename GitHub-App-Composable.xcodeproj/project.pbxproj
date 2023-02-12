@@ -13,10 +13,8 @@
 		B5B6F18B2997D293005727BB /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F18A2997D293005727BB /* TokenResponse.swift */; };
 		B5B6F18F2997D29E005727BB /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F18D2997D29E005727BB /* UIImage+Extension.swift */; };
 		B5B6F1902997D29E005727BB /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F18E2997D29E005727BB /* String+Extension.swift */; };
-		B5B6F1962997D2A3005727BB /* ButtonPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1922997D2A3005727BB /* ButtonPress.swift */; };
-		B5B6F1972997D2A3005727BB /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1932997D2A3005727BB /* ApiClient.swift */; };
 		B5B6F1982997D2A3005727BB /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1942997D2A3005727BB /* Logger.swift */; };
-		B5B6F1992997D2A3005727BB /* GitHub_Moya_APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1952997D2A3005727BB /* GitHub_Moya_APIClient.swift */; };
+		B5B6F1992997D2A3005727BB /* GitHubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1952997D2A3005727BB /* GitHubClient.swift */; };
 		B5B6F19D2997D2A9005727BB /* GlobalState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F19B2997D2A9005727BB /* GlobalState.swift */; };
 		B5B6F19E2997D2A9005727BB /* GitHubState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F19C2997D2A9005727BB /* GitHubState.swift */; };
 		B5B6F1A32997D2AF005727BB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A02997D2AF005727BB /* SearchView.swift */; };
@@ -24,6 +22,8 @@
 		B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A22997D2AF005727BB /* WebView.swift */; };
 		B5B6F1A82997D32D005727BB /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1A72997D32D005727BB /* CombineMoya */; };
 		B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1AA2997D353005727BB /* ComposableArchitecture */; };
+		B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */; };
+		B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1B32997F258005727BB /* MoyaService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,15 +34,15 @@
 		B5B6F18A2997D293005727BB /* TokenResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		B5B6F18D2997D29E005727BB /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		B5B6F18E2997D29E005727BB /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		B5B6F1922997D2A3005727BB /* ButtonPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonPress.swift; sourceTree = "<group>"; };
-		B5B6F1932997D2A3005727BB /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		B5B6F1942997D2A3005727BB /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		B5B6F1952997D2A3005727BB /* GitHub_Moya_APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHub_Moya_APIClient.swift; sourceTree = "<group>"; };
+		B5B6F1952997D2A3005727BB /* GitHubClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubClient.swift; sourceTree = "<group>"; };
 		B5B6F19B2997D2A9005727BB /* GlobalState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalState.swift; sourceTree = "<group>"; };
 		B5B6F19C2997D2A9005727BB /* GitHubState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubState.swift; sourceTree = "<group>"; };
 		B5B6F1A02997D2AF005727BB /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		B5B6F1A12997D2AF005727BB /* MeetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
 		B5B6F1A22997D2AF005727BB /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Composable.swift"; sourceTree = "<group>"; };
+		B5B6F1B32997F258005727BB /* MoyaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,10 +117,8 @@
 		B5B6F1912997D2A3005727BB /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B5B6F1922997D2A3005727BB /* ButtonPress.swift */,
-				B5B6F1932997D2A3005727BB /* ApiClient.swift */,
+				B5B6F1B02997F200005727BB /* Network */,
 				B5B6F1942997D2A3005727BB /* Logger.swift */,
-				B5B6F1952997D2A3005727BB /* GitHub_Moya_APIClient.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -142,6 +140,16 @@
 				B5B6F1A22997D2AF005727BB /* WebView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		B5B6F1B02997F200005727BB /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B5B6F1952997D2A3005727BB /* GitHubClient.swift */,
+				B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */,
+				B5B6F1B32997F258005727BB /* MoyaService.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,12 +230,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5B6F1972997D2A3005727BB /* ApiClient.swift in Sources */,
 				B5B6F18B2997D293005727BB /* TokenResponse.swift in Sources */,
 				B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */,
 				B5B6F1A32997D2AF005727BB /* SearchView.swift in Sources */,
-				B5B6F1962997D2A3005727BB /* ButtonPress.swift in Sources */,
-				B5B6F1992997D2A3005727BB /* GitHub_Moya_APIClient.swift in Sources */,
+				B5B6F1992997D2A3005727BB /* GitHubClient.swift in Sources */,
 				B5B6F1A42997D2AF005727BB /* MeetView.swift in Sources */,
 				B5B6F19D2997D2A9005727BB /* GlobalState.swift in Sources */,
 				B5B6F19E2997D2A9005727BB /* GitHubState.swift in Sources */,
@@ -235,6 +241,8 @@
 				B5B6F18F2997D29E005727BB /* UIImage+Extension.swift in Sources */,
 				B5B6F1982997D2A3005727BB /* Logger.swift in Sources */,
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
+				B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */,
+				B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

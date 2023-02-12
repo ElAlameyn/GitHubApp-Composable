@@ -1,6 +1,6 @@
 //
 //  String+Extension.swift
-//  GitHub_Finder_Composable
+//  AuthorizationFeature_Finder_Composable
 //
 //  Created by Артем Калинкин on 06.02.2023.
 //

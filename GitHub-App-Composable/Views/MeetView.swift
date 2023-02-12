@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  GitHub_Finder_Composable
+//  AuthorizationFeature_Finder_Composable
 //
 //  Created by Артем Калинкин on 15.12.2022.
 //
@@ -47,30 +47,30 @@ struct MeetView: View {
 
             HStack {
               Spacer()
-              Button {
-                viewStore.send(.submitAuthButtonTapped)
-              } label: {
-                Text("Get Started")
-                  .frame(minWidth: 200, minHeight: 40)
-                  .background(.white)
-                  .font(.title.bold())
-                  .cornerRadius(20)
-                  .foregroundStyle(LinearGradient(
-                    colors: [.red, .purple],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                  ))
-              }
-              .padding()
+
+              NavigationLink(
+                isActive: $isLinkActive,
+                destination: SearchView.init,
+                label: {
+                  Text("Get Started")
+                    .frame(minWidth: 200, minHeight: 40)
+                    .background(.white)
+                    .font(.title.bold())
+                    .cornerRadius(20)
+                    .foregroundStyle(LinearGradient(
+                      colors: [.red, .purple],
+                      startPoint: .topLeading,
+                      endPoint: .bottomTrailing
+                    ))
+                    .padding()
+                }
+              )
+              .disabled(!isLinkActive)
+              .onTapGesture { viewStore.send(.submitAuthButtonTapped)}
             }
-
-            NavigationLink(
-              "",
-              destination: SearchView(),
-              isActive: $isLinkActive)
           }
-          Spacer()
 
+          Spacer()
 
           VStack(spacing: -20) {
             Text("Already have an account?\n")
@@ -86,7 +86,7 @@ struct MeetView: View {
           send: .isWebViewDismissed)
         ) {
           WebView(
-            url: ApiClient.login(viewStore.creds)
+            url: GitHubClient.login(viewStore.creds.clientId)
           ) { code in viewStore.send(
             .tokenRequest(
               code: code,
