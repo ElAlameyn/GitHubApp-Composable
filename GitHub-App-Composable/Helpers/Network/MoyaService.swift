@@ -9,8 +9,11 @@ import Moya
 import Foundation
 
 enum MoyaService: TargetType {
-  var baseURL: URL { URL(string: "https://github.com/login/oauth")! }
-  var oauthURL: URL { URL(string: "https://github.com/login/oauth")! }
+  var baseURL: URL {
+    switch self {
+      case .tokenWith: return URL(string: "https://github.com/login/oauth")!
+    }
+  }
 
   case tokenWith(code: String, creds: AuthReducer.State.Credentials)
 
@@ -35,7 +38,6 @@ enum MoyaService: TargetType {
     }
   }
   var headers: [String : String]? {
-    let result = ["Accept": "application/vnd.github+json"]
-    return result
+    return ["Accept": "application/vnd.github+json"]
   }
 }

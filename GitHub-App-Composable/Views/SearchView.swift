@@ -34,6 +34,7 @@ struct SearchView: View {
 
         TextField("Text", text: .constant("OK"))
           .padding(.leading)
+          .padding(.trailing, 60)
           .frame(maxWidth: .infinity, minHeight: 40)
           .background(.white)
           .cornerRadius(10)
@@ -49,18 +50,20 @@ struct SearchView: View {
             }
           }
 
-        Spacer()
+        !isSearchButtonTapped ? Spacer() : Spacer(minLength: 30)
 
-        Button {
-          dismiss()
-        } label: {
-          Image(uiImage:
-              .init(systemName: "rectangle.portrait.and.arrow.forward")!
-            .withTintColor(.white, renderingMode: .alwaysOriginal)
-            .resize(targetSize: .init(width: 45, height: 40))
-          )
+        if !isSearchButtonTapped {
+          Button {
+            dismiss()
+          } label: {
+            Image(uiImage:
+                .init(systemName: "rectangle.portrait.and.arrow.forward")!
+              .withTintColor(.white, renderingMode: .alwaysOriginal)
+              .resize(targetSize: .init(width: 45, height: 40))
+            )
+          }
+          .padding()
         }
-        .padding()
       }
 
       List {
@@ -85,14 +88,14 @@ struct RepoView: View {
       HStack(spacing: 0) {
         Image(uiImage: .init(named: "repo")!
           .withTintColor(.white, renderingMode: .alwaysOriginal)
-          .resize(targetSize: .init(width: 30, height: 50))
+          .resize(targetSize: .init(width: 25, height: 40))
         )
         .padding(.leading, 10)
         .padding(.trailing, 10)
 
         VStack {
           Text("GitHub repo for you smflajxl  js sfjaf")
-            .font(.title2)
+            .font(.body)
             .foregroundColor(.white)
 
           HStack {
@@ -107,7 +110,7 @@ struct RepoView: View {
       }
       Divider()
         .overlay(.white)
-        .frame(width: .infinity)
+        .frame(maxWidth: .infinity)
     }
     .listRowBackground(Color.clear)
   }

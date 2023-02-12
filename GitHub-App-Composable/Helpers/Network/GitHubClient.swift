@@ -16,9 +16,13 @@ struct GitHubClient {
   }
 }
 
-private func doRequest<T: TargetType, V: Decodable>(kind: T, of type: V.Type) async -> Result<V?, Error> {
+extension GitHubClient {
+  static let provider = MoyaProvider<MoyaService>()
+}
+
+private func doRequest<V: Decodable>(kind: MoyaService, of type: V.Type) async -> Result<V?, Error> {
   return await withCheckedContinuation { next in
-    MoyaProvider<T>().request(kind) { result in
+    GitHubClient.provider.request(kind) { result in
       switch result {
         case let .success(response):
           Logger.log(response: response)
