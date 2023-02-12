@@ -25,5 +25,10 @@ struct Logger {
     print("Status code: \(response.statusCode)")
     print("=============🔥==========🔥===============")
   }
+
+  static func debug(_ label: String)  {
+    print("DEBUG: \(label)")
+  }
 }
+
 

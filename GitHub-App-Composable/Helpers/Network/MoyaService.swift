@@ -12,7 +12,7 @@ enum MoyaService: TargetType {
   var baseURL: URL { URL(string: "https://github.com/login/oauth")! }
   var oauthURL: URL { URL(string: "https://github.com/login/oauth")! }
 
-  case tokenWith(code: String, creds: GitHub.State.Credentials)
+  case tokenWith(code: String, creds: AuthReducer.State.Credentials)
 
   var path: String {
     switch self {

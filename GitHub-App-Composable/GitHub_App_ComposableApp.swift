@@ -12,10 +12,17 @@ import ComposableArchitecture
 struct GitHub_App_ComposableApp: App {
     var body: some Scene {
         WindowGroup {
-          MeetView(store: StoreOf<GitHub>(
-            initialState: .init(),
-            reducer: GitHub())
+          GlobalAppView(store:
+              .init(
+                initialState: GlobalApp.State(),
+                reducer: GlobalApp()
+              )
           )
+
+//          MeetView(store: StoreOf<AuthReducer>(
+//            initialState: .init(),
+//            reducer: AuthReducer())
+//          )
         }
     }
 }

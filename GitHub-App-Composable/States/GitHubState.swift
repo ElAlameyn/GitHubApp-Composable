@@ -11,14 +11,12 @@ import ComposableArchitecture
 
 struct Users: Equatable {}
 
-struct GitHub: ReducerProtocol {
+struct AuthReducer: ReducerProtocol {
 
   struct State: Equatable {
     @BindingState var isAuthorized: Bool = false
-    var users: [Users] = []
     var isWebViewPresented: Bool = false
     var creds: Credentials = .init()
-
 
     struct Credentials: Equatable {
       var clientId = "19aeb2677ede1f813ccc"
@@ -36,6 +34,7 @@ struct GitHub: ReducerProtocol {
   @Dependency(\.gitHubClient) var gitHubClient
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    Logger.debug("\(action)")
     switch action {
       case .submitAuthButtonTapped:
         state.isWebViewPresented = true
@@ -51,7 +50,7 @@ struct GitHub: ReducerProtocol {
 
           await send(.authorized(try value.get() != nil))
         }
-        case .isWebViewDismissed: state.isWebViewPresented = false
+      case .isWebViewDismissed: state.isWebViewPresented = false
     }
     return .none
   }

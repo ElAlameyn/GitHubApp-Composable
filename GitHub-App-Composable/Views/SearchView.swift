@@ -65,36 +65,8 @@ struct SearchView: View {
 
       List {
         ForEach((1...10), id: \.self) {_ in
-          VStack {
-            HStack(spacing: 0) {
-              Image(uiImage: .init(named: "repo")!
-                .withTintColor(.white, renderingMode: .alwaysOriginal)
-                .resize(targetSize: .init(width: 30, height: 50))
-              )
-              .padding(.leading, 10)
-              .padding(.trailing, 10)
-
-              VStack {
-                Text("GitHub repo for you smflajxl  js sfjaf")
-                  .font(.title2)
-                  .foregroundColor(.white)
-
-                HStack {
-                  Spacer()
-                  Text("Stars: ")
-                    .font(.footnote)
-                    .foregroundColor(.white)
-                    .padding(.trailing , 20)
-                    .padding(.top, 1)
-                }
-              }
-            }
-            Divider()
-              .overlay(.white)
-              .frame(width: .infinity)
-          }
-          .listRowBackground(Color.clear)
-          }
+          RepoView()
+        }
       }
       .scrollContentBackground(.hidden)
       .listStyle(.grouped)
@@ -104,6 +76,40 @@ struct SearchView: View {
     }
     .navigationBarHidden(true)
     .background(Color.black.opacity(0.8))
+  }
+}
+
+struct RepoView: View {
+  var body: some View {
+    VStack {
+      HStack(spacing: 0) {
+        Image(uiImage: .init(named: "repo")!
+          .withTintColor(.white, renderingMode: .alwaysOriginal)
+          .resize(targetSize: .init(width: 30, height: 50))
+        )
+        .padding(.leading, 10)
+        .padding(.trailing, 10)
+
+        VStack {
+          Text("GitHub repo for you smflajxl  js sfjaf")
+            .font(.title2)
+            .foregroundColor(.white)
+
+          HStack {
+            Spacer()
+            Text("Stars: ")
+              .font(.footnote)
+              .foregroundColor(.white)
+              .padding(.trailing , 20)
+              .padding(.top, 1)
+          }
+        }
+      }
+      Divider()
+        .overlay(.white)
+        .frame(width: .infinity)
+    }
+    .listRowBackground(Color.clear)
   }
 }
 

@@ -8,19 +8,41 @@
 import Foundation
 import ComposableArchitecture
 
-struct GlobalState: ReducerProtocol {
-  struct State {
-    var gitHubState: GitHub.State
+
+struct GlobalApp: ReducerProtocol {
+  struct State: Equatable {
+    var authState: AuthReducer.State?
+
+    var nonNilAuthState: AuthReducer.State {
+      get { authState ?? AuthReducer.State() }
+      set { authState = newValue }
+    }
   }
 
   enum Action {
     case quitApp
+    case authorization(AuthReducer.Action)
+    case checkIfTokenExpired
   }
 
-  func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-    switch action {
-      case .quitApp: exit(0)
+  var body: some ReducerProtocol<State, Action> {
+    Scope(state: \.nonNilAuthState, action: /Action.authorization) {
+      AuthReducer()
+    }
+    Reduce { state, action in
+      switch action {
+        case .quitApp:
+          Logger.debug("Quit Action")
+          exit(0)
+        case .authorization(_):
+          Logger.debug("Auth Action")
+        case .checkIfTokenExpired:
+//          state.authState?.isAuthorized = true
+          state.authState = .init()
+      }
+      return .none
     }
   }
 
 }
+
