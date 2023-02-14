@@ -7,6 +7,8 @@
 
 import ComposableArchitecture
 import Foundation
+import Combine
+import Moya
 
 extension DependencyValues {
   var gitHubClient: GitHubClient {
@@ -17,11 +19,17 @@ extension DependencyValues {
 
 extension GitHubClient: TestDependencyKey {
   static var failValue: GitHubClient = .init { _ in
-      .failure(NSError(domain: "Failed", code: 200))
+    Fail(error: .statusCode(.init(
+      statusCode: 200,
+      data: .init()
+    )))
+    .eraseToAnyPublisher()
   }
 
   static var successValue: GitHubClient = .init { _ in
-      .success(.init(.mock))
+     Just(.mock)
+      .setFailureType(to: MoyaError.self)
+      .eraseToAnyPublisher()
   }
 }
 

@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Combine
 
 
 struct Users: Equatable {}
@@ -43,18 +44,16 @@ struct AuthReducer: ReducerProtocol {
         state.isWebViewPresented = false
       case let .tokenRequest(code: code, creds: creds):
         return .run { send in
-          async let value = gitHubClient
-            .requestToken(
+          let value = try? await gitHubClient.requestToken(
               .tokenWith(code: code, creds: creds)
-            )
-
-          await send(.authorized(try value.get() != nil))
+          ).asyncExtract()
+          await send(.authorized(value != nil))
         }
-      case .isWebViewDismissed: state.isWebViewPresented = false
+      case .isWebViewDismissed:
+        state.isWebViewPresented = false
     }
     return .none
   }
-
 }
 
 
