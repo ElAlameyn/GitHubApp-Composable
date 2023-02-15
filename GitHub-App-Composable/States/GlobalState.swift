@@ -34,11 +34,13 @@ struct GlobalApp: ReducerProtocol {
         case .quitApp:
           Logger.debug("Quit Action")
           exit(0)
-        case .authorization(_):
+        case let .authorization(.authorizedWith(token)):
+          if let token { /* save token to keychain */ }
           Logger.debug("Auth Action")
         case .checkIfTokenExpired:
 //          state.authState?.isAuthorized = true
           state.authState = .init()
+        case .authorization(_): break
       }
       return .none
     }

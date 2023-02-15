@@ -27,7 +27,7 @@ struct AuthReducer: ReducerProtocol {
 
   enum Action {
     case submitAuthButtonTapped
-    case authorized(Bool)
+    case authorizedWith(token: String?)
     case tokenRequest(code: String, creds: State.Credentials)
     case isWebViewDismissed
   }
@@ -38,17 +38,29 @@ struct AuthReducer: ReducerProtocol {
     Logger.debug("\(action)")
     switch action {
       case .submitAuthButtonTapped:
-        state.isWebViewPresented = true
-      case let .authorized(isAuthorized):
-        state.isAuthorized = isAuthorized
+        state.isWebViewPresented = state.isAuthorized ? false : true
+      case let .authorizedWith(token):
+        state.isAuthorized = token != nil
         state.isWebViewPresented = false
       case let .tokenRequest(code: code, creds: creds):
+
         return .run { send in
-          let value = try? await gitHubClient.requestToken(
-              .tokenWith(code: code, creds: creds)
-          ).asyncExtract()
-          await send(.authorized(value != nil))
+          async let value = await gitHubClient.requestToken(
+            .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
+          )
+
+          do {
+            for try await responseResult in await value.values {
+              print("Achieved values: \(responseResult)")
+              await send(.authorizedWith(token: responseResult.accessToken))
+            }
+          } catch (let error) {
+            await send(.authorizedWith(token: nil))
+            print("Error: \(error)")
+          }
+
         }
+
       case .isWebViewDismissed:
         state.isWebViewPresented = false
     }

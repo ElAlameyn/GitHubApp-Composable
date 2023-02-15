@@ -15,7 +15,7 @@ enum MoyaService: TargetType {
     }
   }
 
-  case tokenWith(code: String, creds: AuthReducer.State.Credentials)
+  case tokenWith(code: String, clientId: String, clientSecret: String)
 
   var path: String {
     switch self {
@@ -29,10 +29,10 @@ enum MoyaService: TargetType {
   }
   var task: Task {
     switch self {
-      case let .tokenWith(code: code, creds: creds):
+      case let .tokenWith(code: code, clientId: clientId, clientSecret: clientSecret):
         return .requestParameters(parameters: [
-          "client_id": creds.clientId,
-          "client_secret" : creds.clientSecret,
+          "client_id": clientId,
+          "client_secret" : clientSecret,
           "code": code
         ], encoding: URLEncoding.default)
     }
@@ -41,3 +41,4 @@ enum MoyaService: TargetType {
     return ["Accept": "application/vnd.github+json"]
   }
 }
+
