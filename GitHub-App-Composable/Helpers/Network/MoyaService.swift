@@ -8,23 +8,32 @@
 import Moya
 import Foundation
 
-enum MoyaService: TargetType {
+
+enum MoyaService {
+  case tokenWith(code: String, clientId: String, clientSecret: String)
+  case searchRepo(q: String)
+}
+
+
+extension MoyaService: TargetType {
+
   var baseURL: URL {
     switch self {
       case .tokenWith: return URL(string: "https://github.com/login/oauth")!
+      default: return URL(string: "https://api.github.com")!
     }
   }
-
-  case tokenWith(code: String, clientId: String, clientSecret: String)
 
   var path: String {
     switch self {
       case .tokenWith: return "/access_token"
+      case .searchRepo: return "/search/repositories"
     }
   }
   var method: Moya.Method {
     switch self {
       case .tokenWith: return .post
+      case .searchRepo: return .get
     }
   }
   var task: Task {
@@ -35,10 +44,22 @@ enum MoyaService: TargetType {
           "client_secret" : clientSecret,
           "code": code
         ], encoding: URLEncoding.default)
+      case .searchRepo(q: let q):
+        return .requestParameters(parameters: ["q" : q ], encoding: URLEncoding.default)
     }
   }
+
   var headers: [String : String]? {
     return ["Accept": "application/vnd.github+json"]
+  }
+}
+
+extension MoyaService: AccessTokenAuthorizable {
+  var authorizationType: Moya.AuthorizationType? {
+    switch self {
+      case .tokenWith: return nil
+      default: return .bearer
+    }
   }
 }
 

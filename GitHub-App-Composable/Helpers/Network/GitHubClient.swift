@@ -10,6 +10,7 @@ import Foundation
 import Moya
 import CombineMoya
 import Combine
+import KeychainStored
 
 
 struct GitHubClient {
@@ -21,7 +22,7 @@ struct GitHubClient {
 }
 
 extension GitHubClient {
-  static let provider = MoyaProvider<MoyaService>()
+  static var provider: MoyaProvider<MoyaService> = .init()
 
   static func doRequest<V: Decodable>(_ target: MoyaService ,of type: V.Type) -> AnyPublisher<V, MoyaError> {
     provider.requestPublisher(target)
@@ -30,6 +31,12 @@ extension GitHubClient {
       .decode(type: type, decoder: JSONDecoder())
       .mapError { $0 as? MoyaError ?? .underlying($0, nil) }
       .eraseToAnyPublisher()
+  }
+
+  func setMoyaTokenClosure(_ token: String)  {
+    GitHubClient.provider = MoyaProvider<MoyaService>(plugins: [
+      AccessTokenPlugin { _ in token }
+    ])
   }
 }
 

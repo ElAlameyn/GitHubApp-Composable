@@ -7,11 +7,13 @@
 
 import Foundation
 import ComposableArchitecture
-
+import KeychainStored
 
 struct GlobalApp: ReducerProtocol {
   struct State: Equatable {
+    @KeychainStored(service: "app-auth-token") var token: String?
     var authState: AuthReducer.State?
+    var searchState: SearchReducer.State = .init()
 
     var nonNilAuthState: AuthReducer.State {
       get { authState ?? AuthReducer.State() }
@@ -22,8 +24,11 @@ struct GlobalApp: ReducerProtocol {
   enum Action {
     case quitApp
     case authorization(AuthReducer.Action)
+    case searchAction(SearchReducer.Action)
     case checkIfTokenExpired
   }
+
+  @Dependency(\.gitHubClient) var gitHubClient
 
   var body: some ReducerProtocol<State, Action> {
     Scope(state: \.nonNilAuthState, action: /Action.authorization) {
@@ -35,12 +40,21 @@ struct GlobalApp: ReducerProtocol {
           Logger.debug("Quit Action")
           exit(0)
         case let .authorization(.authorizedWith(token)):
-          if let token { /* save token to keychain */ }
-          Logger.debug("Auth Action")
+          if let token {
+            gitHubClient.setMoyaTokenClosure(token)
+            state.token = token
+          }
+
+        case .authorization(.isWebViewDismissed):
+          if let authState = state.authState, authState.isAuthorized {
+            state.authState = nil
+          }
+
         case .checkIfTokenExpired:
-//          state.authState?.isAuthorized = true
+          // check if token expired
+
           state.authState = .init()
-        case .authorization(_): break
+        case .authorization(_), .searchAction: break
       }
       return .none
     }

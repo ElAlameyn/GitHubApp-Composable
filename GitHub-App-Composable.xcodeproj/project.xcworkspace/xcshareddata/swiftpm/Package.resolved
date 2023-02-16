@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "keychainstored",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/owowagency/KeychainStored",
+      "state" : {
+        "revision" : "3f43efaa85d981f3819c9bca6a4f488d9cb534e9",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "moya",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya",

@@ -9,9 +9,6 @@ import Foundation
 import ComposableArchitecture
 import Combine
 
-
-struct Users: Equatable {}
-
 struct AuthReducer: ReducerProtocol {
 
   struct State: Equatable {

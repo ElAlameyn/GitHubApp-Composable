@@ -10,8 +10,8 @@ import ComposableArchitecture
 import Combine
 
 struct MeetView: View {
-  @State private var getStartedButtonTapped = false
   @State private var isLinkActive = false
+  @Environment(\.dismiss) var dismiss
   let store: StoreOf<AuthReducer>
 
   var body: some View {
@@ -47,26 +47,46 @@ struct MeetView: View {
           HStack {
             Spacer()
 
-            NavigationLink(
-              isActive: $isLinkActive,
-              destination: SearchView.init,
-              label: {
-                Text("Get Started")
-                  .frame(minWidth: 200, minHeight: 40)
-                  .background(.white)
-                  .font(.title.bold())
-                  .cornerRadius(20)
-                  .foregroundStyle(LinearGradient(
-                    colors: [.red, .purple],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                  ))
-                  .padding()
-              }
-            )
-            .disabled(!isLinkActive)
-            .onTapGesture { viewStore.send(.submitAuthButtonTapped)}
+            Button {
+              viewStore.send(.submitAuthButtonTapped)
+            } label: {
+              Text("Get Started")
+                .frame(minWidth: 200, minHeight: 40)
+                .background(.white)
+                .font(.title.bold())
+                .cornerRadius(20)
+                .foregroundStyle(LinearGradient(
+                  colors: [.red, .purple],
+                  startPoint: .topLeading,
+                  endPoint: .bottomTrailing
+                ))
+                .padding()
+            }
           }
+
+
+//            NavigationLink(
+//              isActive: $isLinkActive,
+//              destination: {
+//                SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
+//              },
+//              label: {
+//                Text("Get Started")
+//                  .frame(minWidth: 200, minHeight: 40)
+//                  .background(.white)
+//                  .font(.title.bold())
+//                  .cornerRadius(20)
+//                  .foregroundStyle(LinearGradient(
+//                    colors: [.red, .purple],
+//                    startPoint: .topLeading,
+//                    endPoint: .bottomTrailing
+//                  ))
+//                  .padding()
+//              }
+//            )
+//            .disabled(!isLinkActive)
+//            .onTapGesture { }
+//          }
         }
 
         Spacer()
@@ -91,10 +111,9 @@ struct MeetView: View {
             code: code,
             creds: viewStore.creds
           ))
-        }.onAppear {
-          withAnimation { getStartedButtonTapped = false }
-        }.onDisappear {
-          isLinkActive = viewStore.isAuthorized
+        }
+        .onDisappear {
+          if viewStore.isAuthorized { dismiss() }
         }
       }
     }

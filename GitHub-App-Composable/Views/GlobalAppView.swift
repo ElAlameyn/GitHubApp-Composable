@@ -8,15 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 
-class Auth {
-  var checkAuth: Bool = true
-}
-
 struct GlobalAppView: View {
 
   let store: StoreOf<GlobalApp>
   @State var viewStore: ViewStoreOf<GlobalApp>
-  @State var checkAuth = true
+  @State var checkAuth = false
 
   init(store: StoreOf<GlobalApp>) {
     self.store = store
@@ -37,16 +33,12 @@ struct GlobalAppView: View {
           if checkAuth {
             Text("Checking Authorization.....")
           } else {
-            SearchView()
+            SearchView(store: store.scope(state: \.searchState, action: GlobalApp.Action.searchAction))
           }
         }
       )
     }.onAppear {
       viewStore.send(.checkIfTokenExpired)
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: { [self] in
-//        self.checkAuth = false
-//        viewStore.send(.checkIfTokenExpired)
-//      })
     }
   }
 }

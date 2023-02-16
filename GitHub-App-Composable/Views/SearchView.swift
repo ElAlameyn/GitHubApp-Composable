@@ -6,76 +6,79 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct SearchView: View {
 
-  @State var isSearchButtonTapped = false
   @State var textFieldScaling = 0.0
+  let store: StoreOf<SearchReducer>
 
   @Environment(\.dismiss) var dismiss
 
   var body: some View {
-    VStack {
-      HStack {
-        Button {
-          withAnimation {
-            isSearchButtonTapped.toggle()
-            textFieldScaling = isSearchButtonTapped ? 1.0 : 0.0
-          }
-        } label: {
-          Image(uiImage:
-              .init(systemName: "magnifyingglass.circle")!
-            .withTintColor(.white, renderingMode: .alwaysOriginal)
-            .resize(targetSize: .init(width: 50, height: 50))
-          )
-        }
-        .padding()
-
-
-        TextField("Text", text: .constant("OK"))
-          .padding(.leading)
-          .padding(.trailing, 60)
-          .frame(maxWidth: .infinity, minHeight: 40)
-          .background(.white)
-          .cornerRadius(10)
-          .scaleEffect(textFieldScaling)
-          .overlay {
-            if !isSearchButtonTapped {
-              Text("Explore and find Repositories on Git")
-                .font(.title2.bold())
-                .multilineTextAlignment(.center)
-                .foregroundColor(.white)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-            }
-          }
-
-        !isSearchButtonTapped ? Spacer() : Spacer(minLength: 30)
-
-        if !isSearchButtonTapped {
+    WithViewStore(self.store) { viewStore in
+      VStack {
+        HStack {
           Button {
-            dismiss()
+            withAnimation {
+              viewStore.send(.searchButtonTapped)
+              textFieldScaling = viewStore.isSearchFieldAppeared ? 1.0 : 0.0
+            }
           } label: {
             Image(uiImage:
-                .init(systemName: "rectangle.portrait.and.arrow.forward")!
+                .init(systemName: "magnifyingglass.circle")!
               .withTintColor(.white, renderingMode: .alwaysOriginal)
-              .resize(targetSize: .init(width: 45, height: 40))
+              .resize(targetSize: .init(width: 50, height: 50))
             )
           }
           .padding()
-        }
-      }
 
-      List {
-        ForEach((1...10), id: \.self) {_ in
-          RepoView()
-        }
-      }
-      .scrollContentBackground(.hidden)
-      .listStyle(.grouped)
-      .padding(.top, -10)
 
-      Spacer()
+          TextField("Text", text: .constant("OK"))
+            .padding(.leading)
+            .padding(.trailing, 60)
+            .frame(maxWidth: .infinity, minHeight: 40)
+            .background(.white)
+            .cornerRadius(10)
+            .scaleEffect(textFieldScaling)
+            .overlay {
+              if !viewStore.isSearchFieldAppeared {
+                Text("Explore and find Repositories on Git")
+                  .font(.title2.bold())
+                  .multilineTextAlignment(.center)
+                  .foregroundColor(.white)
+                  .lineLimit(nil)
+                  .fixedSize(horizontal: false, vertical: true)
+              }
+            }
+
+          !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
+
+          if !viewStore.isSearchFieldAppeared {
+            Button {
+              dismiss()
+            } label: {
+              Image(uiImage:
+                  .init(systemName: "rectangle.portrait.and.arrow.forward")!
+                .withTintColor(.white, renderingMode: .alwaysOriginal)
+                .resize(targetSize: .init(width: 45, height: 40))
+              )
+            }
+            .padding()
+          }
+        }
+
+        List {
+          ForEach((1...10), id: \.self) {_ in
+            RepoView()
+          }
+        }
+        .scrollContentBackground(.hidden)
+        .listStyle(.grouped)
+        .padding(.top, -10)
+
+        Spacer()
+      }
     }
     .navigationBarHidden(true)
     .background(Color.black.opacity(0.8))
@@ -118,6 +121,6 @@ struct RepoView: View {
 
 struct SearchView_Previews: PreviewProvider {
   static var previews: some View {
-    SearchView()
+    SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
   }
 }

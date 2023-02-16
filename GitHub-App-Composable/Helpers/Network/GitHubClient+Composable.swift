@@ -20,10 +20,12 @@ extension DependencyValues {
 
 extension GitHubClient: TestDependencyKey {
   static var failValue: GitHubClient = .init { _ in
-    Fail(error: .statusCode(.init(
-      statusCode: 200,
-      data: .init()
-    )))
+    Fail(error: .statusCode(
+      .init(
+        statusCode: 200,
+        data: .init()
+      )
+    ))
     .eraseToAnyPublisher()
   }
 
