@@ -10,13 +10,13 @@ import ComposableArchitecture
 
 struct GlobalAppView: View {
 
-  let store: StoreOf<GlobalApp>
-  @State var viewStore: ViewStoreOf<GlobalApp>
+  let store: StoreOf<AppReducer>
+  @ObservedObject var viewStore: ViewStoreOf<AppReducer>
   @State var checkAuth = false
 
-  init(store: StoreOf<GlobalApp>) {
+  init(store: StoreOf<AppReducer>) {
     self.store = store
-    self.viewStore = ViewStoreOf<GlobalApp>(store)
+    self.viewStore = ViewStoreOf<AppReducer>(store)
   }
 
   var body: some View {
@@ -25,7 +25,7 @@ struct GlobalAppView: View {
       // Check if token expired
 
       IfLetStore(
-        store.scope(state: \.authState, action: GlobalApp.Action.authorization),
+        store.scope(state: \.authState, action: AppReducer.Action.authorization),
         then: {
           MeetView(store: $0)
         },
@@ -33,7 +33,7 @@ struct GlobalAppView: View {
           if checkAuth {
             Text("Checking Authorization.....")
           } else {
-            SearchView(store: store.scope(state: \.searchState, action: GlobalApp.Action.searchAction))
+            SearchView(store: store.scope(state: \.searchState, action: AppReducer.Action.searchAction))
           }
         }
       )
@@ -47,8 +47,8 @@ struct GlobalAppView_Previews: PreviewProvider {
   static var previews: some View {
     GlobalAppView(store:
         .init(
-          initialState: GlobalApp.State(),
-          reducer: GlobalApp()
+          initialState: AppReducer.State(),
+          reducer: AppReducer()
         )
     )
   }

@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import Combine
+import Moya
 
 struct AuthReducer: ReducerProtocol {
 
@@ -46,6 +47,12 @@ struct AuthReducer: ReducerProtocol {
             .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
           )
 
+          if let responseResult = await AsyncManager.extract(value.values) {
+              await send(.authorizedWith(token: responseResult.accessToken))
+          } else {
+            await send(.authorizedWith(token: nil))
+          }
+
           do {
             for try await responseResult in await value.values {
               print("Achieved values: \(responseResult)")
@@ -66,3 +73,19 @@ struct AuthReducer: ReducerProtocol {
 }
 
 
+
+
+struct AsyncManager {
+
+  static func extract<T>(_ value: AsyncThrowingPublisher<AnyPublisher<T, MoyaError>>) async -> T? {
+    do {
+      for try await responseResult in value {
+        print("Achieved values: \(responseResult)")
+        return responseResult
+      }
+    } catch (let error) {
+      print("Error: \(error)")
+    }
+    return nil
+  }
+}

@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 import KeychainStored
 
-struct GlobalApp: ReducerProtocol {
+struct AppReducer: ReducerProtocol {
   struct State: Equatable {
     @KeychainStored(service: "app-auth-token") var token: String?
     var authState: AuthReducer.State?
@@ -31,9 +31,8 @@ struct GlobalApp: ReducerProtocol {
   @Dependency(\.gitHubClient) var gitHubClient
 
   var body: some ReducerProtocol<State, Action> {
-    Scope(state: \.nonNilAuthState, action: /Action.authorization) {
-      AuthReducer()
-    }
+    Scope(state: \.nonNilAuthState, action: /Action.authorization) { AuthReducer() }
+    Scope(state: \.searchState, action: /Action.searchAction) { SearchReducer() }
     Reduce { state, action in
       switch action {
         case .quitApp:
@@ -51,9 +50,10 @@ struct GlobalApp: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
+          break
           // check if token expired
 
-          state.authState = .init()
+//          state.authState = .init()
         case .authorization(_), .searchAction: break
       }
       return .none

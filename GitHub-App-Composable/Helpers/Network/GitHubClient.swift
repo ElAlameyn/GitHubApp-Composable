@@ -19,6 +19,11 @@ struct GitHubClient {
     doRequest($0, of: TokenResponse.self)
   }
 
+  var searchRepos: (MoyaService) async -> AnyPublisher<RepositoriesResponse, MoyaError> = {
+    doRequest($0, of: RepositoriesResponse.self)
+  }
+
+
 }
 
 extension GitHubClient {
@@ -27,7 +32,10 @@ extension GitHubClient {
   static func doRequest<V: Decodable>(_ target: MoyaService ,of type: V.Type) -> AnyPublisher<V, MoyaError> {
     provider.requestPublisher(target)
       .receive(on: DispatchQueue.main)
-      .map(\.data)
+      .map {
+        Logger.log(response: $0)
+        return $0.data
+      }
       .decode(type: type, decoder: JSONDecoder())
       .mapError { $0 as? MoyaError ?? .underlying($0, nil) }
       .eraseToAnyPublisher()

@@ -63,30 +63,6 @@ struct MeetView: View {
                 .padding()
             }
           }
-
-
-//            NavigationLink(
-//              isActive: $isLinkActive,
-//              destination: {
-//                SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
-//              },
-//              label: {
-//                Text("Get Started")
-//                  .frame(minWidth: 200, minHeight: 40)
-//                  .background(.white)
-//                  .font(.title.bold())
-//                  .cornerRadius(20)
-//                  .foregroundStyle(LinearGradient(
-//                    colors: [.red, .purple],
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing
-//                  ))
-//                  .padding()
-//              }
-//            )
-//            .disabled(!isLinkActive)
-//            .onTapGesture { }
-//          }
         }
 
         Spacer()

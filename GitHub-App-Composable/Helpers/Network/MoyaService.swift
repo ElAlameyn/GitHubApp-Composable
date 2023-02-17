@@ -27,7 +27,7 @@ extension MoyaService: TargetType {
   var path: String {
     switch self {
       case .tokenWith: return "/access_token"
-      case .searchRepo: return "/search/repositories"
+      case .searchRepo(let q): return "/search/repositories?q=\(q)"
     }
   }
   var method: Moya.Method {
@@ -44,8 +44,7 @@ extension MoyaService: TargetType {
           "client_secret" : clientSecret,
           "code": code
         ], encoding: URLEncoding.default)
-      case .searchRepo(q: let q):
-        return .requestParameters(parameters: ["q" : q ], encoding: URLEncoding.default)
+      default: return .requestPlain
     }
   }
 

@@ -12,6 +12,8 @@ struct SearchView: View {
 
   @State var textFieldScaling = 0.0
   let store: StoreOf<SearchReducer>
+//  @State var viewStore: ViewStoreOf<GlobalApp>
+  @State var text: String = ""
 
   @Environment(\.dismiss) var dismiss
 
@@ -34,7 +36,11 @@ struct SearchView: View {
           .padding()
 
 
-          TextField("Text", text: .constant("OK"))
+          TextField("Text", text: viewStore
+            .binding(\.$searchTextFieldText)
+            .removeDuplicates()
+          )
+//            .uniqueUpdates())
             .padding(.leading)
             .padding(.trailing, 60)
             .frame(maxWidth: .infinity, minHeight: 40)
@@ -78,6 +84,9 @@ struct SearchView: View {
         .padding(.top, -10)
 
         Spacer()
+      }
+      .onAppear {
+        viewStore.send(.onAppear)
       }
     }
     .navigationBarHidden(true)
