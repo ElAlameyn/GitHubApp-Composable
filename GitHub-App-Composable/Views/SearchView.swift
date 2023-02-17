@@ -40,7 +40,6 @@ struct SearchView: View {
             .binding(\.$searchTextFieldText)
             .removeDuplicates()
           )
-//            .uniqueUpdates())
             .padding(.leading)
             .padding(.trailing, 60)
             .frame(maxWidth: .infinity, minHeight: 40)
@@ -74,14 +73,32 @@ struct SearchView: View {
           }
         }
 
-        List {
-          ForEach((1...10), id: \.self) {_ in
-            RepoView()
+        if !viewStore.repositories.isEmpty {
+
+          List {
+            ForEach(viewStore.repositories, id: \.self) { repo in
+              RepoView(title: repo.name)
+            }
           }
+          .scrollContentBackground(.hidden)
+          .listStyle(.grouped)
+          .padding(.top, -10)
         }
-        .scrollContentBackground(.hidden)
-        .listStyle(.grouped)
-        .padding(.top, -10)
+//        else {
+//          List {
+////            ForEach(viewStore.repositories, id: \.self) { repo in
+////              RepoView(title: repo.name)
+////            }
+//            ForEach((0...10), id: \.self) { _ in
+//              RepoView(title: "Hello")
+//            }
+//          }
+//          .scrollContentBackground(.hidden)
+//          .listStyle(.grouped)
+//          .padding(.top, -10)
+//        }
+
+
 
         Spacer()
       }
@@ -95,6 +112,9 @@ struct SearchView: View {
 }
 
 struct RepoView: View {
+
+  var title: String
+
   var body: some View {
     VStack {
       HStack(spacing: 0) {
@@ -103,13 +123,15 @@ struct RepoView: View {
           .resize(targetSize: .init(width: 25, height: 40))
         )
         .padding(.leading, 10)
-        .padding(.trailing, 10)
+        .padding(.trailing, 15)
+
+        Text(title)
+          .font(.body)
+          .foregroundColor(.white)
+          .multilineTextAlignment(.center)
 
         VStack {
-          Text("GitHub repo for you smflajxl  js sfjaf")
-            .font(.body)
-            .foregroundColor(.white)
-
+          Spacer()
           HStack {
             Spacer()
             Text("Stars: ")

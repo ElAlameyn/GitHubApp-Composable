@@ -47,11 +47,11 @@ struct AuthReducer: ReducerProtocol {
             .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
           )
 
-          if let responseResult = await AsyncManager.extract(value.values) {
-              await send(.authorizedWith(token: responseResult.accessToken))
-          } else {
-            await send(.authorizedWith(token: nil))
-          }
+//          if let responseResult = await AsyncManager.extract(value.values) {
+//              await send(.authorizedWith(token: responseResult.accessToken))
+//          } else {
+//            await send(.authorizedWith(token: nil))
+//          }
 
           do {
             for try await responseResult in await value.values {

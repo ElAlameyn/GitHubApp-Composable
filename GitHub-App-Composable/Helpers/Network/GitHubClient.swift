@@ -27,23 +27,33 @@ struct GitHubClient {
 }
 
 extension GitHubClient {
-  static var provider: MoyaProvider<MoyaService> = .init()
+  static var provider: MoyaProvider<MoyaService> = .init(plugins: [
+ //   NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
+  ])
 
   static func doRequest<V: Decodable>(_ target: MoyaService ,of type: V.Type) -> AnyPublisher<V, MoyaError> {
     provider.requestPublisher(target)
       .receive(on: DispatchQueue.main)
-      .map {
-        Logger.log(response: $0)
-        return $0.data
-      }
-      .decode(type: type, decoder: JSONDecoder())
+//      .map {
+//        Logger.log(response: $0)
+//        return $0
+//      }
+      .map(\.data)
+      .decode(type: type, decoder: {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+      }()
+      )
       .mapError { $0 as? MoyaError ?? .underlying($0, nil) }
       .eraseToAnyPublisher()
   }
 
   func setMoyaTokenClosure(_ token: String)  {
+    let log: PluginType = NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
     GitHubClient.provider = MoyaProvider<MoyaService>(plugins: [
-      AccessTokenPlugin { _ in token }
+      AccessTokenPlugin { _ in token },
+      // log
     ])
   }
 }

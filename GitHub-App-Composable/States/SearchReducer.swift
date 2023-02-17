@@ -11,7 +11,7 @@ import SwiftUI
 
 //struct Repository: Decodable, Equatable { }
 
-struct Repository: Equatable {
+struct Repository: Equatable, Hashable {
   var name: String
 }
 
@@ -28,12 +28,14 @@ struct SearchReducer: ReducerProtocol {
     case searchButtonTapped
     case exitButtonTapped
     case repositoryItemTapped
-    case searchRepos
+    case onSuccessSearchRequest(repos: [Repository])
     case onAppear
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
 
+
+  enum SearchID {}
 
   var body: some ReducerProtocol<State, Action> {
     BindingReducer()
@@ -47,32 +49,42 @@ struct SearchReducer: ReducerProtocol {
           break
         case .repositoryItemTapped:
           break
-        case .searchRepos:
+
+        case let .onSuccessSearchRequest(repos):
+          state.repositories = repos
+        case .binding(\.$searchTextFieldText):
           let text = state.searchTextFieldText
-          return .run { _ in
-            print("Called")
+          return .run { send in
 
             async let value = await gitHubClient.searchRepos(
               .searchRepo(q: text)
             )
-              .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+              .removeDuplicates()
               .eraseToAnyPublisher()
 
-            if let responseResult = await AsyncManager.extract(value.values) {
-
+            do {
+              for try await responseResult in await value.values {
+                print("Achieved values: \(responseResult)")
+                await send(.onSuccessSearchRequest(repos: responseResult.items.compactMap { Repository(name: $0.name) } ))
+//                return responseResult
+              }
+            } catch (let error) {
+              print("Error: \(error)")
             }
           }
-//            print("Requested: \(MoyaService.searchRepo(q: "K"))")
-//            MoyaService.searchRepo(q: "s").authorizationType?.value
-        case .binding(\.$searchTextFieldText):
-          return .run { send in
-            await send(.searchRepos)
-          }
+          .debounce(id: SearchID.self, for: 0.5, scheduler: RunLoop.main)
+
+//            if let responseResult = await AsyncManager.extract(value.values) {
+//              print("Repos: \(responseResult.items.map { Repository(name: $0.name) })")
+//              await send(.onSuccessSearchRequest(repos: responseResult.items.map { Repository(name: $0.name) }))
+////              responseResult.items.
+//            }
+//          }
 
         case .binding(_): return .none
 
         case .onAppear:
-          gitHubClient.setMoyaTokenClosure("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")
+          gitHubClient.setMoyaTokenClosure("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")
       }
       return .none
     }
