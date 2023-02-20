@@ -28,7 +28,7 @@ struct GithubRepository: Codable, Equatable {
 //  let url: String?
 //  let createdAt, updatedAt, pushedAt: Date?
 //  let homepage: String
-//  let size, stargazersCount, watchersCount: Int
+    let size, stargazersCount, watchersCount: Int
 //  let language: String
 //  let forksCount, openIssuesCount: Int
 //  let masterBranch, defaultBranch: String
@@ -70,7 +70,7 @@ struct License: Codable, Equatable {
 // MARK: - Owner
 struct Owner: Codable, Equatable {
   let login: String?
-  let id: Int?
+  let id: Int
   let nodeId: String?
   let avatarUrl: String?
   let gravatarId: String?

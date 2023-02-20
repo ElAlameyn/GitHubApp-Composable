@@ -12,13 +12,13 @@ import ComposableArchitecture
 struct GitHub_App_ComposableApp: App {
     var body: some Scene {
         WindowGroup {
-          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
-//          GlobalAppView(store:
-//              .init(
-//                initialState: AppReducer.State(authState: .init()),
-//                reducer: AppReducer()
-//              )
-//          )
+//          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
+          AppView(store:
+              .init(
+                initialState: AppReducer.State(authState: nil),
+                reducer: AppReducer()
+              )
+          )
 
 //          MeetView(store: StoreOf<AuthReducer>(
 //            initialState: .init(),

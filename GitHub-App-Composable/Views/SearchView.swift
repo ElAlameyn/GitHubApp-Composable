@@ -9,12 +9,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SearchView: View {
-
+  
   @State var textFieldScaling = 0.0
   let store: StoreOf<SearchReducer>
-//  @State var viewStore: ViewStoreOf<GlobalApp>
+  //  @State var viewStore: ViewStoreOf<GlobalApp>
   @State var text: String = ""
-
+  @State var selectedTab: TabBarView.Tab = .magnifyingglass
+  
   @Environment(\.dismiss) var dismiss
 
   var body: some View {
@@ -28,37 +29,37 @@ struct SearchView: View {
             }
           } label: {
             Image(uiImage:
-                .init(systemName: "magnifyingglass.circle")!
+                .init(systemName: "magnifyingglass")!
               .withTintColor(.white, renderingMode: .alwaysOriginal)
-              .resize(targetSize: .init(width: 50, height: 50))
+              .resize(targetSize: .init(width: 45, height: 40))
             )
           }
           .padding()
-
-
+          
+          
           TextField("Text", text: viewStore
             .binding(\.$searchTextFieldText)
             .removeDuplicates()
           )
-            .padding(.leading)
-            .padding(.trailing, 60)
-            .frame(maxWidth: .infinity, minHeight: 40)
-            .background(.white)
-            .cornerRadius(10)
-            .scaleEffect(textFieldScaling)
-            .overlay {
-              if !viewStore.isSearchFieldAppeared {
-                Text("Explore and find Repositories on Git")
-                  .font(.title2.bold())
-                  .multilineTextAlignment(.center)
-                  .foregroundColor(.white)
-                  .lineLimit(nil)
-                  .fixedSize(horizontal: false, vertical: true)
-              }
+          .padding(.leading)
+          .padding(.trailing, 60)
+          .frame(maxWidth: .infinity, minHeight: 40)
+          .background(.white)
+          .cornerRadius(10)
+          .scaleEffect(textFieldScaling)
+          .overlay {
+            if !viewStore.isSearchFieldAppeared {
+              Text("Explore and find Repositories on Git")
+                .font(.title2.bold())
+                .multilineTextAlignment(.center)
+                .foregroundColor(.white)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
             }
-
+          }
+          
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
-
+          
           if !viewStore.isSearchFieldAppeared {
             Button {
               dismiss()
@@ -72,9 +73,8 @@ struct SearchView: View {
             .padding()
           }
         }
-
+        
         if !viewStore.repositories.isEmpty {
-
           List {
             ForEach(viewStore.repositories, id: \.self) { repo in
               RepoView(title: repo.name)
@@ -84,32 +84,20 @@ struct SearchView: View {
           .listStyle(.grouped)
           .padding(.top, -10)
         }
-//        else {
-//          List {
-////            ForEach(viewStore.repositories, id: \.self) { repo in
-////              RepoView(title: repo.name)
-////            }
-//            ForEach((0...10), id: \.self) { _ in
-//              RepoView(title: "Hello")
-//            }
-//          }
-//          .scrollContentBackground(.hidden)
-//          .listStyle(.grouped)
-//          .padding(.top, -10)
-//        }
-
-
 
         Spacer()
+
       }
+      .navigationBarHidden(true)
+      .background(Color.black.opacity(0.8))
       .onAppear {
         viewStore.send(.onAppear)
       }
     }
-    .navigationBarHidden(true)
-    .background(Color.black.opacity(0.8))
   }
 }
+
+
 
 struct RepoView: View {
 
@@ -149,6 +137,10 @@ struct RepoView: View {
     .listRowBackground(Color.clear)
   }
 }
+
+
+
+
 
 struct SearchView_Previews: PreviewProvider {
   static var previews: some View {

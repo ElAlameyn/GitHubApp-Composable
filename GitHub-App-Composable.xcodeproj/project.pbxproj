@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B531716F2998F40500BE5482 /* GlobalAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531716E2998F40500BE5482 /* GlobalAppView.swift */; };
+		B531716F2998F40500BE5482 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531716E2998F40500BE5482 /* AppView.swift */; };
 		B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */; };
 		B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */; };
 		B5B6F1802997D283005727BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B6F17F2997D283005727BB /* Assets.xcassets */; };
@@ -33,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B531716E2998F40500BE5482 /* GlobalAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAppView.swift; sourceTree = "<group>"; };
+		B531716E2998F40500BE5482 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		B5B6F1782997D282005727BB /* GitHub-App-Composable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub-App-Composable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_App_ComposableApp.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 				B5B6F1A02997D2AF005727BB /* SearchView.swift */,
 				B5B6F1A12997D2AF005727BB /* MeetView.swift */,
 				B5B6F1A22997D2AF005727BB /* WebView.swift */,
-				B531716E2998F40500BE5482 /* GlobalAppView.swift */,
+				B531716E2998F40500BE5482 /* AppView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 				B5BE5D48299D2B6A00FF7CC9 /* ComposableAdaptive.swift in Sources */,
 				B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */,
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
-				B531716F2998F40500BE5482 /* GlobalAppView.swift in Sources */,
+				B531716F2998F40500BE5482 /* AppView.swift in Sources */,
 				B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */,
 				B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */,
 			);
