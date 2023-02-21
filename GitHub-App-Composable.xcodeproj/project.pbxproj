@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B515030329A3D5B900D87787 /* AsyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515030229A3D5B900D87787 /* AsyncManager.swift */; };
+		B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515030429A3D91200D87787 /* ActivityIndicator.swift */; };
 		B531716F2998F40500BE5482 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531716E2998F40500BE5482 /* AppView.swift */; };
 		B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */; };
 		B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */; };
@@ -20,7 +22,7 @@
 		B5B6F19D2997D2A9005727BB /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F19B2997D2A9005727BB /* AppReducer.swift */; };
 		B5B6F19E2997D2A9005727BB /* AuthReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F19C2997D2A9005727BB /* AuthReducer.swift */; };
 		B5B6F1A32997D2AF005727BB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A02997D2AF005727BB /* SearchView.swift */; };
-		B5B6F1A42997D2AF005727BB /* MeetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A12997D2AF005727BB /* MeetView.swift */; };
+		B5B6F1A42997D2AF005727BB /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A12997D2AF005727BB /* AuthView.swift */; };
 		B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A22997D2AF005727BB /* WebView.swift */; };
 		B5B6F1A82997D32D005727BB /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1A72997D32D005727BB /* CombineMoya */; };
 		B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1AA2997D353005727BB /* ComposableArchitecture */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B515030229A3D5B900D87787 /* AsyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncManager.swift; sourceTree = "<group>"; };
+		B515030429A3D91200D87787 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		B531716E2998F40500BE5482 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		B5B6F1782997D282005727BB /* GitHub-App-Composable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub-App-Composable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,7 +51,7 @@
 		B5B6F19B2997D2A9005727BB /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		B5B6F19C2997D2A9005727BB /* AuthReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthReducer.swift; sourceTree = "<group>"; };
 		B5B6F1A02997D2AF005727BB /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		B5B6F1A12997D2AF005727BB /* MeetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetView.swift; sourceTree = "<group>"; };
+		B5B6F1A12997D2AF005727BB /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		B5B6F1A22997D2AF005727BB /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Composable.swift"; sourceTree = "<group>"; };
 		B5B6F1B32997F258005727BB /* MoyaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaService.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				B5B6F1B02997F200005727BB /* Network */,
 				B5B6F1942997D2A3005727BB /* Logger.swift */,
 				B5BE5D47299D2B6A00FF7CC9 /* ComposableAdaptive.swift */,
+				B515030229A3D5B900D87787 /* AsyncManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -152,9 +157,10 @@
 			isa = PBXGroup;
 			children = (
 				B5B6F1A02997D2AF005727BB /* SearchView.swift */,
-				B5B6F1A12997D2AF005727BB /* MeetView.swift */,
+				B5B6F1A12997D2AF005727BB /* AuthView.swift */,
 				B5B6F1A22997D2AF005727BB /* WebView.swift */,
 				B531716E2998F40500BE5482 /* AppView.swift */,
+				B515030429A3D91200D87787 /* ActivityIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,15 +261,17 @@
 				B5BE5D4C299EA6B600FF7CC9 /* RepositoriesResponse.swift in Sources */,
 				B5BE5D4A299E83EC00FF7CC9 /* SearchReducer.swift in Sources */,
 				B5B6F1992997D2A3005727BB /* GitHubClient.swift in Sources */,
-				B5B6F1A42997D2AF005727BB /* MeetView.swift in Sources */,
+				B5B6F1A42997D2AF005727BB /* AuthView.swift in Sources */,
 				B5B6F19D2997D2A9005727BB /* AppReducer.swift in Sources */,
 				B5B6F19E2997D2A9005727BB /* AuthReducer.swift in Sources */,
 				B5B6F1902997D29E005727BB /* String+Extension.swift in Sources */,
 				B5B6F18F2997D29E005727BB /* UIImage+Extension.swift in Sources */,
 				B5B6F1982997D2A3005727BB /* Logger.swift in Sources */,
+				B515030329A3D5B900D87787 /* AsyncManager.swift in Sources */,
 				B5BE5D48299D2B6A00FF7CC9 /* ComposableAdaptive.swift in Sources */,
 				B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */,
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
+				B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */,
 				B531716F2998F40500BE5482 /* AppView.swift in Sources */,
 				B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */,
 				B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */,

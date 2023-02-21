@@ -27,7 +27,7 @@ struct AppView: View {
       IfLetStore(
         store.scope(state: \.authState, action: AppReducer.Action.authorization),
         then: {
-          MeetView(store: $0)
+          AuthView(store: $0)
         },
         else: {
           ZStack {
@@ -92,7 +92,7 @@ struct TabBarView: View {
         }
       }
       .frame(width: nil, height: 90)
-      .background(.black.opacity(0.3))
+      .background(Color.init(red: 38 / 255, green: 38 / 255, blue: 38 / 255).blur(radius: 10))
       .cornerRadius(20)
       .padding()
     }

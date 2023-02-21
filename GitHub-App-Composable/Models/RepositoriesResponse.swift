@@ -55,30 +55,29 @@ struct GithubRepository: Codable, Equatable {
 //  let hasIssues, hasProjects, hasPages, hasWiki: Bool
 //  let hasDownloads, archived, disabled: Bool
 //  let visibility: String
-//  let license: License?
-
+//  let license: License
 }
 
 // MARK: - License
 struct License: Codable, Equatable {
-  let key, name: String?
-  let url: String?
-  let spdxId, nodeId: String?
-  let htmlUrl: String?
+  let key, name: String
+  let url: String
+  let spdxId, nodeId: String
+  let htmlUrl: String
 }
 
 // MARK: - Owner
 struct Owner: Codable, Equatable {
-  let login: String?
+  let login: String
   let id: Int
-  let nodeId: String?
-  let avatarUrl: String?
-  let gravatarId: String?
-  let url, receivedEventsUrl: String?
-  let type: String?
-  let htmlUrl, followersUrl: String?
-  let followingUrl, gistsUrl, starredUrl: String?
-  let subscriptionsUrl, organizationsUrl, reposUrl: String?
-  let eventsUrl: String?
-  let siteAdmin: Bool?
+  let nodeId: String
+  let avatarUrl: String
+  let gravatarId: String
+  let url, receivedEventsUrl: String
+  let type: String
+  let htmlUrl, followersUrl: String
+  let followingUrl, gistsUrl, starredUrl: String
+  let subscriptionsUrl, organizationsUrl, reposUrl: String
+  let eventsUrl: String
+  let siteAdmin: Bool
 }

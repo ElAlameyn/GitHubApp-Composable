@@ -40,7 +40,7 @@ struct AppReducer: ReducerProtocol {
           exit(0)
         case let .authorization(.authorizedWith(token)):
           if let token {
-            gitHubClient.setMoyaTokenClosure(token)
+            gitHubClient.setToken(token)
             state.token = token
           }
 

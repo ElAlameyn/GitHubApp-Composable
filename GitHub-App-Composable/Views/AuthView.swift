@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import Combine
 
-struct MeetView: View {
+struct AuthView: View {
   @State private var isLinkActive = false
   @Environment(\.dismiss) var dismiss
   let store: StoreOf<AuthReducer>
@@ -99,7 +99,7 @@ struct MeetView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    MeetView(store: StoreOf<AuthReducer>(
+    AuthView(store: StoreOf<AuthReducer>(
       initialState: .init(),
       reducer: AuthReducer()
     )

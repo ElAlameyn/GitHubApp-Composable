@@ -9,13 +9,11 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SearchView: View {
-  
-  @State var textFieldScaling = 0.0
+
   let store: StoreOf<SearchReducer>
-  //  @State var viewStore: ViewStoreOf<GlobalApp>
-  @State var text: String = ""
-  @State var selectedTab: TabBarView.Tab = .magnifyingglass
-  
+  @State var textFieldScaling = 0.0
+  @FocusState var isSearchingFocused: Bool
+
   @Environment(\.dismiss) var dismiss
 
   var body: some View {
@@ -37,10 +35,13 @@ struct SearchView: View {
           .padding()
           
           
-          TextField("Text", text: viewStore
-            .binding(\.$searchTextFieldText)
-            .removeDuplicates()
+          TextField(
+            "Text",
+            text: viewStore
+              .binding(\.$searchTextFieldText)
+              .removeDuplicates()
           )
+          .focused($isSearchingFocused)
           .padding(.leading)
           .padding(.trailing, 60)
           .frame(maxWidth: .infinity, minHeight: 40)
@@ -57,7 +58,7 @@ struct SearchView: View {
                 .fixedSize(horizontal: false, vertical: true)
             }
           }
-          
+
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
           
           if !viewStore.isSearchFieldAppeared {
@@ -65,16 +66,16 @@ struct SearchView: View {
               dismiss()
             } label: {
               Image(uiImage:
-                  .init(systemName: "rectangle.portrait.and.arrow.forward")!
+                  .init(systemName: "gearshape")!
                 .withTintColor(.white, renderingMode: .alwaysOriginal)
-                .resize(targetSize: .init(width: 45, height: 40))
+                .resize(targetSize: .init(width: 45, height: 45))
               )
             }
             .padding()
           }
         }
         
-        if !viewStore.repositories.isEmpty {
+        if !viewStore.repositories.isEmpty && !viewStore.isSearching {
           List {
             ForEach(viewStore.repositories, id: \.self) { repo in
               RepoView(title: repo.name)
@@ -83,6 +84,19 @@ struct SearchView: View {
           .scrollContentBackground(.hidden)
           .listStyle(.grouped)
           .padding(.top, -10)
+        } else if !viewStore.isSearching {
+          Spacer()
+          Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")
+            .font(.title2.bold())
+            .foregroundColor(.white)
+            .padding()
+
+          Text(!viewStore.isEmptySearchResponse ? "Click to upside \"Search button\"" : "Find smth else.")
+            .font(.footnote.bold())
+            .foregroundColor(.white)
+        } else {
+          Spacer()
+          ActivityIndicator(isAnimating: viewStore.binding(\.$isSearching), style: .large)
         }
 
         Spacer()
@@ -96,8 +110,6 @@ struct SearchView: View {
     }
   }
 }
-
-
 
 struct RepoView: View {
 

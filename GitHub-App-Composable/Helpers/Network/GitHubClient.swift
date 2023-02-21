@@ -28,7 +28,7 @@ struct GitHubClient {
 
 extension GitHubClient {
   static var provider: MoyaProvider<MoyaService> = .init(plugins: [
- //   NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
+//    NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody)) // Log function
   ])
 
   static func doRequest<V: Decodable>(_ target: MoyaService ,of type: V.Type) -> AnyPublisher<V, MoyaError> {
@@ -49,8 +49,8 @@ extension GitHubClient {
       .eraseToAnyPublisher()
   }
 
-  func setMoyaTokenClosure(_ token: String)  {
-    let log: PluginType = NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
+  func setToken(_ token: String)  {
+
     GitHubClient.provider = MoyaProvider<MoyaService>(plugins: [
       AccessTokenPlugin { _ in token },
       // log
