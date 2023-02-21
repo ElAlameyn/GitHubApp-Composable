@@ -43,9 +43,14 @@ struct AuthReducer: ReducerProtocol {
       case let .tokenRequest(code: code, creds: creds):
 
         return .run { send in
-          async let value = await gitHubClient.requestToken(
-            .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
-          )
+//          async let value = await gitHubClient.requestToken(
+//            .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
+//          )
+
+          async let value = await gitHubClient
+            .tokenRequest
+            .run(.tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret))
+            
 
           if let responseResult = await AsyncManager.extract(value.values) {
             await send(.authorizedWith(token: responseResult.accessToken))

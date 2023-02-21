@@ -21,8 +21,8 @@ struct SearchView: View {
       VStack {
         HStack {
           Button {
-            withAnimation {
               viewStore.send(.searchButtonTapped)
+            withAnimation {
               textFieldScaling = viewStore.isSearchFieldAppeared ? 1.0 : 0.0
             }
           } label: {
@@ -105,7 +105,7 @@ struct SearchView: View {
       .navigationBarHidden(true)
       .background(Color.black.opacity(0.8))
       .onAppear {
-        viewStore.send(.onAppear)
+//        viewStore.send(.onAppear)
       }
     }
   }

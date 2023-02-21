@@ -63,11 +63,12 @@ struct SearchReducer: ReducerProtocol {
 
             await send(.set(\.$isSearching, true))
 
-            async let value = await gitHubClient.searchRepos(
-              .searchRepo(q: text)
-            )
+            async let value = await gitHubClient
+              .searchRequest
+              .run(.searchRepo(q: text))
               .removeDuplicates()
               .eraseToAnyPublisher()
+
 
             if let responseResult = await AsyncManager.extract(value.values) {
 
@@ -81,8 +82,8 @@ struct SearchReducer: ReducerProtocol {
 
         case .binding(_): return .none
 
-        case .onAppear:
-          gitHubClient.setToken("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")
+        case .onAppear: break
+//          gitHubClient.setToken("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")
 
         case .onEmptyResponse:
           state.isEmptySearchResponse = true

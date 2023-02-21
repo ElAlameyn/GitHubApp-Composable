@@ -39,10 +39,7 @@ struct AppReducer: ReducerProtocol {
           Logger.debug("Quit Action")
           exit(0)
         case let .authorization(.authorizedWith(token)):
-          if let token {
-            gitHubClient.setToken(token)
-            state.token = token
-          }
+          if let token { state.token = token }
 
         case .authorization(.isWebViewDismissed):
           if let authState = state.authState, authState.isAuthorized {
@@ -50,10 +47,9 @@ struct AppReducer: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
+          // TODO: Handle token expiration
           break
-          // check if token expired
 
-//          state.authState = .init()
         case .authorization(_), .searchAction: break
       }
       return .none
