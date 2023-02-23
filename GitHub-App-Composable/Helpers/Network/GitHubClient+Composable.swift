@@ -21,7 +21,7 @@ extension DependencyValues {
 extension GitHubClient: TestDependencyKey {
   static var failValue: GitHubClient = .init(searchRequest: .init(
     .live, tokenService: "app-auth-token", { _ in
-      Fail(error: .statusCode(
+      Fail(error: MoyaError.statusCode(
         .init(
           statusCode: 200,
           data: .init()
@@ -34,8 +34,9 @@ extension GitHubClient: TestDependencyKey {
   static var successValue: GitHubClient = .init(tokenRequest: .init(
     .live, tokenService: "app-auth-token", { _ in
       Just(.mock)
-        .setFailureType(to: MoyaError.self)
-      .eraseToAnyPublisher()    }
+        .setFailureType(to: Error.self)
+      .eraseToAnyPublisher()
+    }
   ))
 }
 

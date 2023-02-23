@@ -29,6 +29,7 @@ struct AuthReducer: ReducerProtocol {
     case submitAuthButtonTapped
     case authorizedWith(tokenResponse: TokenResponse?)
     case tokenRequest(code: String, creds: State.Credentials)
+    case tokenResponse(TaskResult<TokenResponse>)
     case isWebViewDismissed
   }
 
@@ -43,28 +44,30 @@ struct AuthReducer: ReducerProtocol {
         state.isWebViewPresented = false
       case let .tokenRequest(code: code, creds: creds):
 
-        return .run { send in
-
-          // TODO: Make task
-          async let value = await gitHubClient
-            .tokenRequest
-            .run(.tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret))
-            
-
-          if let responseResult = await AsyncManager.extract(value.values) {
-            await send(.authorizedWith(tokenResponse: responseResult))
-          } else {
-            await send(.authorizedWith(tokenResponse: nil))
-          }
-
+        return .task {
+          await .tokenResponse(TaskResult {
+            await gitHubClient
+              .tokenRequest
+              .run(.tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret))
+              .values
+          })
         }
 
       case .isWebViewDismissed:
+        state.isWebViewPresented = false
+
+      case .tokenResponse(.success(_)):
+        state.isAuthorized = true
+        state.isWebViewPresented = false
+
+      case .tokenResponse(.failure(_)):
+        state.isAuthorized = false
         state.isWebViewPresented = false
     }
     return .none
   }
 }
+
 
 
 

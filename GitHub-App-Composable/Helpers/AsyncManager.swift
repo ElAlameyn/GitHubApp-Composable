@@ -10,7 +10,7 @@ import Moya
 
 struct AsyncManager {
 
-  static func extract<T>(_ value: AsyncThrowingPublisher<AnyPublisher<T, MoyaError>>) async -> T? {
+  static func extract<T>(_ value: AsyncThrowingPublisher<AnyPublisher<T, Error>>) async -> T? {
     do {
       for try await responseResult in value {
         print("Achieved values: \(responseResult)")
@@ -21,4 +21,20 @@ struct AsyncManager {
     }
     return nil
   }
+
+  static func extractValues<T>( _ value: AsyncThrowingPublisher<AnyPublisher<T, Error>>) async throws -> T {
+    try await withCheckedThrowingContinuation { next in
+      async {
+        do {
+          for try await responseResult in value {
+            print("Achieved values: \(responseResult)")
+            next.resume(returning: responseResult)
+          }
+        } catch (let error) {
+          next.resume(throwing: error)
+        }
+      }
+    }
+  }
+
 }

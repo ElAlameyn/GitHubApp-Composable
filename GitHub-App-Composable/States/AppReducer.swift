@@ -41,11 +41,7 @@ struct AppReducer: ReducerProtocol {
           exit(0)
         case let .authorization(.authorizedWith(tokenResponse)):
           // Saving tokens
-          // TODO: Create some saving client
-          if let tokenResponse {
-            state.token = tokenResponse.accessToken
-            state.tokenModel = .init(response: tokenResponse, savedDate: Date())
-          }
+          saveTokenInfo(tokenResponse, state: &state)
 
         case .authorization(.isWebViewDismissed):
           if let authState = state.authState, authState.isAuthorized {
@@ -54,15 +50,31 @@ struct AppReducer: ReducerProtocol {
 
         case .checkIfTokenExpired:
           // Checking if should present auth view
-          if let tokenModel = state.tokenModel {
-            state.authState = tokenModel.isExpiredBy(currentDate: Date()) ? .init() : nil
-          } else {
-            state.authState = .init()
-          }
+
+          state.authState = .init()
+//          checkTokenExpiration(state: &state)
+
 
         case .authorization(_), .searchAction: break
       }
       return .none
+    }
+  }
+
+  // TODO: Create some saving client
+
+  private func checkTokenExpiration(state: inout State) {
+    if let tokenModel = state.tokenModel {
+      state.authState = tokenModel.isExpiredBy(currentDate: Date()) ? .init() : nil
+    } else {
+      state.authState = .init()
+    }
+  }
+
+  private func saveTokenInfo(_ tokenResponse: TokenResponse?, state: inout State) {
+    if let tokenResponse {
+      state.token = tokenResponse.accessToken
+      state.tokenModel = .init(response: tokenResponse, savedDate: Date())
     }
   }
 

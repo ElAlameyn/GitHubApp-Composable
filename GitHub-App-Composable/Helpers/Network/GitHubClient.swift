@@ -31,13 +31,13 @@ enum MoyaStub<V: TargetType> {
 
 struct Provider<T: Decodable, V: TargetType> {
   var provider: MoyaProvider<V>
-  var run: (V) async -> AnyPublisher<T, MoyaError>
+  var run: (V) async -> AnyPublisher<T, Error>
 }
 
 extension Provider {
   init(_ type: MoyaStub<V>,
        tokenService: String = "app-auth-token",
-       _ f: ((V) -> AnyPublisher<T, MoyaError>)? = nil) {
+       _ f: ((V) -> AnyPublisher<T, Error>)? = nil) {
     @KeychainStored(service: tokenService) var token: String?
 
     switch type {
