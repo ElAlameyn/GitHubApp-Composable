@@ -69,7 +69,6 @@ struct SearchReducer: ReducerProtocol {
               .removeDuplicates()
               .eraseToAnyPublisher()
 
-
             if let responseResult = await AsyncManager.extract(value.values) {
 
               await send(.onSuccessSearchRequest(repos: responseResult.items.map { Repository(name: $0.name) }))

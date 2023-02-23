@@ -44,10 +44,13 @@ extension Provider {
       case .live:
         if let token = token {
           provider = MoyaProvider<V>(plugins: [
-            AccessTokenPlugin { _ in token }
+            AccessTokenPlugin { _ in token },
+            NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
           ])
         } else  {
-          provider = MoyaProvider<V>(plugins: [])
+          provider = MoyaProvider<V>(plugins: [
+            NetworkLoggerPlugin(configuration: .init(logOptions: .successResponseBody))
+          ])
         }
       case .test:
        provider = MoyaProvider<V>(stubClosure: MoyaProvider.immediatelyStub)

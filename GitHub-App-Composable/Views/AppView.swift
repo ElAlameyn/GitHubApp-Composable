@@ -23,7 +23,7 @@ struct AppView: View {
   
   var body: some View {
     NavigationView {
-      // Check if token expired
+      
       IfLetStore(
         store.scope(state: \.authState, action: AppReducer.Action.authorization),
         then: {

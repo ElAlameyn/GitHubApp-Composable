@@ -18,14 +18,16 @@ struct AuthReducer: ReducerProtocol {
     var creds: Credentials = .init()
 
     struct Credentials: Equatable {
-      var clientId = "19aeb2677ede1f813ccc"
-      var clientSecret = "813e4e4f5ae96ac0dab36870933e2b89966e86e7"
+//      var clientId = "19aeb2677ede1f813ccc"
+      var clientId = "Iv1.7c01457eab0c5039"
+//      var clientSecret = "813e4e4f5ae96ac0dab36870933e2b89966e86e7"
+      var clientSecret = "79cda2e631bdeef3ed76c1f663dd61dc8325b25b"
     }
   }
 
   enum Action {
     case submitAuthButtonTapped
-    case authorizedWith(token: String?)
+    case authorizedWith(tokenResponse: TokenResponse?)
     case tokenRequest(code: String, creds: State.Credentials)
     case isWebViewDismissed
   }
@@ -33,7 +35,6 @@ struct AuthReducer: ReducerProtocol {
   @Dependency(\.gitHubClient) var gitHubClient
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-    Logger.debug("\(action)")
     switch action {
       case .submitAuthButtonTapped:
         state.isWebViewPresented = state.isAuthorized ? false : true
@@ -43,19 +44,17 @@ struct AuthReducer: ReducerProtocol {
       case let .tokenRequest(code: code, creds: creds):
 
         return .run { send in
-//          async let value = await gitHubClient.requestToken(
-//            .tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret)
-//          )
 
+          // TODO: Make task
           async let value = await gitHubClient
             .tokenRequest
             .run(.tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret))
             
 
           if let responseResult = await AsyncManager.extract(value.values) {
-            await send(.authorizedWith(token: responseResult.accessToken))
+            await send(.authorizedWith(tokenResponse: responseResult))
           } else {
-            await send(.authorizedWith(token: nil))
+            await send(.authorizedWith(tokenResponse: nil))
           }
 
         }

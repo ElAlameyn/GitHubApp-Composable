@@ -15,7 +15,7 @@ struct GitHub_App_ComposableApp: App {
 //          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
           AppView(store:
               .init(
-                initialState: AppReducer.State(authState: .init()),
+                initialState: AppReducer.State(),
                 reducer: AppReducer()
               )
           )

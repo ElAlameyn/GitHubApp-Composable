@@ -12,7 +12,8 @@ import KeychainStored
 struct AppReducer: ReducerProtocol {
   struct State: Equatable {
     @KeychainStored(service: "app-auth-token") var token: String?
-    var authState: AuthReducer.State?
+    @KeychainStored(service: "app-auth-token-response") var tokenModel: ExpirationTokenModel?
+    var authState: AuthReducer.State? = nil
     var searchState: SearchReducer.State = .init()
 
     var nonNilAuthState: AuthReducer.State {
@@ -38,8 +39,13 @@ struct AppReducer: ReducerProtocol {
         case .quitApp:
           Logger.debug("Quit Action")
           exit(0)
-        case let .authorization(.authorizedWith(token)):
-          if let token { state.token = token }
+        case let .authorization(.authorizedWith(tokenResponse)):
+          // Saving tokens
+          // TODO: Create some saving client
+          if let tokenResponse {
+            state.token = tokenResponse.accessToken
+            state.tokenModel = .init(response: tokenResponse, savedDate: Date())
+          }
 
         case .authorization(.isWebViewDismissed):
           if let authState = state.authState, authState.isAuthorized {
@@ -47,8 +53,12 @@ struct AppReducer: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
-          // TODO: Handle token expiration
-          break
+          // Checking if should present auth view
+          if let tokenModel = state.tokenModel {
+            state.authState = tokenModel.isExpiredBy(currentDate: Date()) ? .init() : nil
+          } else {
+            state.authState = .init()
+          }
 
         case .authorization(_), .searchAction: break
       }
