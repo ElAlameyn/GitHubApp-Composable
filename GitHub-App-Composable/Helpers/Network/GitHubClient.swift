@@ -13,6 +13,7 @@ import Combine
 import KeychainStored
 
 
+// TODO: AutoPaste tokenService and MoyaService
 struct GitHubClient {
   var tokenRequest = Provider<TokenResponse, MoyaService>(.live, tokenService: "")
   var searchRequest = Provider<RepositoriesResponse, MoyaService>(.live)
@@ -74,5 +75,8 @@ extension Provider {
       }
     }
   }
+
 }
+
+
 

@@ -40,7 +40,6 @@ struct AppReducer: ReducerProtocol {
           Logger.debug("Quit Action")
           exit(0)
         case let .authorization(.authorizedWith(tokenResponse)):
-          // Saving tokens
           saveTokenInfo(tokenResponse, state: &state)
 
         case .authorization(.isWebViewDismissed):
@@ -49,11 +48,8 @@ struct AppReducer: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
-          // Checking if should present auth view
-
-          state.authState = .init()
-//          checkTokenExpiration(state: &state)
-
+//          state.authState = .init()
+          checkTokenExpiration(state: &state)
 
         case .authorization(_), .searchAction: break
       }

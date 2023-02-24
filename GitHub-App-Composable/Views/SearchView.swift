@@ -78,13 +78,21 @@ struct SearchView: View {
         if !viewStore.repositories.isEmpty && !viewStore.isSearching {
           List {
             ForEach(viewStore.repositories, id: \.self) { repo in
-              RepoView(title: repo.name)
+              RepoView(title: repo.name, starsCount: repo.stargazersCount)
+                .swipeActions {
+                  Button {
+                    //TODO: Add to favourites 
+                  } label: {
+                    Label("Star", systemImage: "star.fill")
+                  }
+                  .tint(.yellow)
+                }
             }
           }
           .scrollContentBackground(.hidden)
           .listStyle(.grouped)
           .padding(.top, -10)
-        } else if !viewStore.isSearching {
+        } else if !viewStore.isSearching || viewStore.searchTextFieldText.isEmpty {
           Spacer()
           Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")
             .font(.title2.bold())
@@ -114,6 +122,7 @@ struct SearchView: View {
 struct RepoView: View {
 
   var title: String
+  var starsCount: Int
 
   var body: some View {
     VStack {
@@ -128,13 +137,17 @@ struct RepoView: View {
         Text(title)
           .font(.body)
           .foregroundColor(.white)
-          .multilineTextAlignment(.center)
+          .multilineTextAlignment(.leading)
+
+        Spacer()
 
         VStack {
           Spacer()
-          HStack {
-            Spacer()
-            Text("Stars: ")
+          HStack(spacing: 3) {
+            Spacer().frame(width: 10)
+            Image(systemName: "star.fill")
+              .foregroundColor(.yellow)
+            Text("\(starsCount)")
               .font(.footnote)
               .foregroundColor(.white)
               .padding(.trailing , 20)

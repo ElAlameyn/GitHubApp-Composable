@@ -13,6 +13,7 @@ import SwiftUI
 
 struct Repository: Equatable, Hashable {
   var name: String
+  var stargazersCount: Int
 }
 
 struct SearchReducer: ReducerProtocol {
@@ -71,7 +72,12 @@ struct SearchReducer: ReducerProtocol {
 
             if let responseResult = await AsyncManager.extract(value.values) {
 
-              await send(.onSuccessSearchRequest(repos: responseResult.items.map { Repository(name: $0.name) }))
+              await send(.onSuccessSearchRequest(repos: responseResult.items.map {
+                Repository(
+                  name: $0.name,
+                  stargazersCount: $0.stargazersCount
+                )
+              }))
               if responseResult.items.isEmpty { await send(.onEmptyResponse) }
 
               await send(.set(\.$isSearching, false))
