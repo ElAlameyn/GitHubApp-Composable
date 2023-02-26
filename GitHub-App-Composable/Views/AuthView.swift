@@ -81,7 +81,7 @@ struct AuthView: View {
         send: .isWebViewDismissed)
       ) {
         WebView(
-          url: GitHubClient.login(viewStore.creds.clientId)
+          url: GitHubClient.getOauthURL(clientId: viewStore.creds.clientId)
         ) { code in viewStore.send(
           .tokenRequest(
             code: code,

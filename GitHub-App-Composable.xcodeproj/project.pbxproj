@@ -35,6 +35,8 @@
 		B5BE5D48299D2B6A00FF7CC9 /* ComposableAdaptive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BE5D47299D2B6A00FF7CC9 /* ComposableAdaptive.swift */; };
 		B5BE5D4A299E83EC00FF7CC9 /* SearchReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BE5D49299E83EC00FF7CC9 /* SearchReducer.swift */; };
 		B5BE5D4C299EA6B600FF7CC9 /* RepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BE5D4B299EA6B600FF7CC9 /* RepositoriesResponse.swift */; };
+		B5FDD70429AA8E380085763E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDD70329AA8E380085763E /* UserView.swift */; };
+		B5FDD70629AA8E4F0085763E /* UserReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FDD70529AA8E4F0085763E /* UserReducer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		B5BE5D47299D2B6A00FF7CC9 /* ComposableAdaptive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposableAdaptive.swift; sourceTree = "<group>"; };
 		B5BE5D49299E83EC00FF7CC9 /* SearchReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReducer.swift; sourceTree = "<group>"; };
 		B5BE5D4B299EA6B600FF7CC9 /* RepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesResponse.swift; sourceTree = "<group>"; };
+		B5FDD70329AA8E380085763E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		B5FDD70529AA8E4F0085763E /* UserReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 				B5B6F19B2997D2A9005727BB /* AppReducer.swift */,
 				B5B6F19C2997D2A9005727BB /* AuthReducer.swift */,
 				B5BE5D49299E83EC00FF7CC9 /* SearchReducer.swift */,
+				B5FDD70529AA8E4F0085763E /* UserReducer.swift */,
 			);
 			path = States;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				B5B6F1A22997D2AF005727BB /* WebView.swift */,
 				B531716E2998F40500BE5482 /* AppView.swift */,
 				B515030429A3D91200D87787 /* ActivityIndicator.swift */,
+				B5FDD70329AA8E380085763E /* UserView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -283,6 +289,8 @@
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
 				B58D573529A55B3E0079987C /* Publisher+Extension.swift in Sources */,
 				B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */,
+				B5FDD70629AA8E4F0085763E /* UserReducer.swift in Sources */,
+				B5FDD70429AA8E380085763E /* UserView.swift in Sources */,
 				B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */,
 				B531716F2998F40500BE5482 /* AppView.swift in Sources */,
 				B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */,

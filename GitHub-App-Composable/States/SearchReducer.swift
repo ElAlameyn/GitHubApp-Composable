@@ -9,8 +9,6 @@ import ComposableArchitecture
 import Foundation
 import SwiftUI
 
-//struct Repository: Decodable, Equatable { }
-
 struct Repository: Equatable, Hashable {
   var name: String
   var stargazersCount: Int
@@ -37,7 +35,6 @@ struct SearchReducer: ReducerProtocol {
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
-
 
   enum SearchID {}
 

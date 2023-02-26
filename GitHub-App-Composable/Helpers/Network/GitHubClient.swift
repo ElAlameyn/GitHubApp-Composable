@@ -14,13 +14,21 @@ import KeychainStored
 
 
 // TODO: AutoPaste tokenService and MoyaService
+
+protocol PAPIClientService { static var tokenKey: String { get set } }
+struct APIClientService {}
+
+extension APIClientService: PAPIClientService {
+  static var tokenKey: String = "app-auth-token"
+}
+
 struct GitHubClient {
   var tokenRequest = Provider<TokenResponse, MoyaService>(.live, tokenService: "")
   var searchRequest = Provider<RepositoriesResponse, MoyaService>(.live)
 }
 
 extension GitHubClient {
-  static var login = { (clientId: String )in
+  static func getOauthURL(clientId: String) -> URL {
     URL(string: "https://github.com/login/oauth/authorize?client_id=\(clientId)")!
   }
 }
@@ -37,8 +45,9 @@ struct Provider<T: Decodable, V: TargetType> {
 
 extension Provider {
   init(_ type: MoyaStub<V>,
-       tokenService: String = "app-auth-token",
+       tokenService: String = APIClientService.tokenKey,
        _ f: ((V) -> AnyPublisher<T, Error>)? = nil) {
+
     @KeychainStored(service: tokenService) var token: String?
 
     switch type {

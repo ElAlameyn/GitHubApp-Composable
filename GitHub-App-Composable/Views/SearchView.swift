@@ -81,7 +81,7 @@ struct SearchView: View {
               RepoView(title: repo.name, starsCount: repo.stargazersCount)
                 .swipeActions {
                   Button {
-                    //TODO: Add to favourites 
+                    //TODO: Add to favourites
                   } label: {
                     Label("Star", systemImage: "star.fill")
                   }
