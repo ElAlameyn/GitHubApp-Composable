@@ -60,7 +60,8 @@ struct SearchView: View {
           }
 
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
-          
+
+          // Display Gear
           if !viewStore.isSearchFieldAppeared {
             Button {
               dismiss()
@@ -74,7 +75,8 @@ struct SearchView: View {
             .padding()
           }
         }
-        
+
+        // Repositories Output
         if !viewStore.repositories.isEmpty && !viewStore.isSearching {
           List {
             ForEach(viewStore.repositories, id: \.self) { repo in
@@ -92,6 +94,7 @@ struct SearchView: View {
           .scrollContentBackground(.hidden)
           .listStyle(.grouped)
           .padding(.top, -10)
+          // Empty Response
         } else if !viewStore.isSearching || viewStore.searchTextFieldText.isEmpty {
           Spacer()
           Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")

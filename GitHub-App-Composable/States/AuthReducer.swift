@@ -18,9 +18,7 @@ struct AuthReducer: ReducerProtocol {
     var creds: Credentials = .init()
 
     struct Credentials: Equatable {
-//      var clientId = "19aeb2677ede1f813ccc"
       var clientId = "Iv1.7c01457eab0c5039"
-//      var clientSecret = "813e4e4f5ae96ac0dab36870933e2b89966e86e7"
       var clientSecret = "79cda2e631bdeef3ed76c1f663dd61dc8325b25b"
     }
   }
@@ -39,9 +37,7 @@ struct AuthReducer: ReducerProtocol {
     switch action {
       case .submitAuthButtonTapped:
         state.isWebViewPresented = state.isAuthorized ? false : true
-      case let .authorizedWith(token):
-        state.isAuthorized = token != nil
-        state.isWebViewPresented = false
+      case .authorizedWith: break
       case let .tokenRequest(code: code, creds: creds):
 
         return .task {
@@ -56,9 +52,10 @@ struct AuthReducer: ReducerProtocol {
       case .isWebViewDismissed:
         state.isWebViewPresented = false
 
-      case .tokenResponse(.success(_)):
+      case .tokenResponse(.success(let response)):
         state.isAuthorized = true
         state.isWebViewPresented = false
+        return .send(.authorizedWith(tokenResponse: response))
 
       case .tokenResponse(.failure(_)):
         state.isAuthorized = false

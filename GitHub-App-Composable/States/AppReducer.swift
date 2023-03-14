@@ -48,7 +48,6 @@ struct AppReducer: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
-//          state.authState = .init()
           checkTokenExpiration(state: &state)
 
         case .authorization(_), .searchAction: break

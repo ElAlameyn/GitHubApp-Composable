@@ -13,11 +13,11 @@ import Combine
 import KeychainStored
 
 
-// TODO: AutoPaste tokenService and MoyaService
 
 protocol PAPIClientService { static var tokenKey: String { get set } }
 struct APIClientService {}
 
+/// Conform to PAPIClientService to work with token requests
 extension APIClientService: PAPIClientService {
   static var tokenKey: String = "app-auth-token"
 }
@@ -25,6 +25,7 @@ extension APIClientService: PAPIClientService {
 struct GitHubClient {
   var tokenRequest = Provider<TokenResponse, MoyaService>(.live, tokenService: "")
   var searchRequest = Provider<RepositoriesResponse, MoyaService>(.live)
+  var userRequest = Provider<UserResponse, MoyaService>(.live)
 }
 
 extension GitHubClient {
