@@ -44,6 +44,7 @@ struct WebView: UIViewRepresentable {
         }
     }
 
+
     func makeCoordinator() -> Coordinator {
         let coordinator = Coordinator()
         coordinator.callBack = self.callBack

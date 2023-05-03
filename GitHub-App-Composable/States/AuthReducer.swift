@@ -5,22 +5,21 @@
 //  Created by Артем Калинкин on 17.12.2022.
 //
 
-import Foundation
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
+import Foundation
 import Moya
 
 struct AuthReducer: ReducerProtocol {
-
   struct State: Equatable {
-    @BindingState var isAuthorized: Bool = false
-    var isWebViewPresented: Bool = false
-    var creds: Credentials = .init()
-
     struct Credentials: Equatable {
       var clientId = "Iv1.7c01457eab0c5039"
       var clientSecret = "79cda2e631bdeef3ed76c1f663dd61dc8325b25b"
     }
+
+    @BindingState var isAuthorized: Bool = false
+    var isWebViewPresented: Bool = false
+    var creds: Credentials = .init()
   }
 
   enum Action {
@@ -43,8 +42,14 @@ struct AuthReducer: ReducerProtocol {
         return .task {
           await .tokenResponse(TaskResult {
             await gitHubClient
-              .tokenRequest
-              .run(.tokenWith(code: code, clientId: creds.clientId, clientSecret: creds.clientSecret))
+              .request(
+                .tokenWith(
+                  code: code,
+                  clientId: creds.clientId,
+                  clientSecret: creds.clientSecret
+                ),
+                of: TokenResponse.self
+              )
               .values
           })
         }
@@ -52,7 +57,7 @@ struct AuthReducer: ReducerProtocol {
       case .isWebViewDismissed:
         state.isWebViewPresented = false
 
-      case .tokenResponse(.success(let response)):
+      case let .tokenResponse(.success(response)):
         state.isAuthorized = true
         state.isWebViewPresented = false
         return .send(.authorizedWith(tokenResponse: response))
@@ -64,9 +69,3 @@ struct AuthReducer: ReducerProtocol {
     return .none
   }
 }
-
-
-
-
-
-

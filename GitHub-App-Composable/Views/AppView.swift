@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AppView: View {
-  
   let store: StoreOf<AppReducer>
   @ObservedObject var viewStore: ViewStoreOf<AppReducer>
   @State var checkAuth = false

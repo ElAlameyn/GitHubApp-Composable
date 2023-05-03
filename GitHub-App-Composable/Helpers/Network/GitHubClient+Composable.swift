@@ -11,38 +11,22 @@ import Combine
 import Moya
 
 extension DependencyValues {
-  var gitHubClient: GitHubClient {
-    get { self[GitHubClient.self] }
-    set { self[GitHubClient.self] = newValue }
+  var gitHubClient: GitHubClient<MoyaService> {
+    get { self[GitHubClient<MoyaService>.self] }
+    set { self[GitHubClient<MoyaService>.self] = newValue }
   }
 }
 
 
-extension GitHubClient: TestDependencyKey {
-  static var failValue: GitHubClient =
-    .init(searchRequest: .init(
-      .live, { _ in
-        Fail(error: MoyaError.statusCode(
-          .init(
-            statusCode: 200,
-            data: .init()
-          )
-        ))
-        .eraseToAnyPublisher()
-      }
-    ))
-
-  static var successValue: GitHubClient =
-    .init(tokenRequest: .init(
-      .live, { _ in
-        Just(.mock)
-          .setFailureType(to: Error.self)
-          .eraseToAnyPublisher()
-      }
-    ))
+extension GitHubClient: TestDependencyKey  where V == MoyaService {
+  static var failValue: GitHubClient<MoyaService> {
+    GitHubClient<MoyaService>()
+  }
 }
 
-extension GitHubClient: DependencyKey {
-  static var liveValue: GitHubClient = .init()
+extension GitHubClient: DependencyKey where V == MoyaService {
+  static var liveValue: GitHubClient<MoyaService> {
+    GitHubClient<MoyaService>()
+  }
 }
 

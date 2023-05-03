@@ -49,8 +49,7 @@ struct UserReducer: ReducerProtocol {
         return .task {
           await .userResponse(TaskResult {
             await gitHubClient
-              .userRequest
-              .run(.authUser)
+              .request(.authUser, of: UserResponse.self)
               .values
           })
         }

@@ -62,8 +62,7 @@ struct SearchReducer: ReducerProtocol {
             await send(.set(\.$isSearching, true))
 
             async let value = await gitHubClient
-              .searchRequest
-              .run(.searchRepo(q: text))
+              .request(.searchRepo(q: text), of: RepositoriesResponse.self)
               .removeDuplicates()
               .eraseToAnyPublisher()
 

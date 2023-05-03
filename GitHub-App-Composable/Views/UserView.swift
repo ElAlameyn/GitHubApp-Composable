@@ -97,9 +97,7 @@ struct UserView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
       UserView(store: .init(
-        initialState: .init(
-          userAccount: .mock
-        ),
+        initialState: .init(userAccount: .mock),
         reducer: UserReducer()
       ))
     }
