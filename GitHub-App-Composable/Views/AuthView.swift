@@ -10,7 +10,7 @@ import ComposableArchitecture
 import Combine
 
 struct AuthView: View {
-  @State private var isLinkActive = false
+//  @State private var isLinkActive = false
   @Environment(\.dismiss) var dismiss
   let store: StoreOf<AuthReducer>
 

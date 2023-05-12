@@ -17,7 +17,6 @@ extension DependencyValues {
   }
 }
 
-
 extension GitHubClient: TestDependencyKey  where V == MoyaService {
   static var failValue: GitHubClient<MoyaService> {
     GitHubClient<MoyaService>()

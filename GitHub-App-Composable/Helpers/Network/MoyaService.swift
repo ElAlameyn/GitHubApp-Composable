@@ -13,6 +13,7 @@ enum MoyaService {
   case tokenWith(code: String, clientId: String, clientSecret: String)
   case authUser
   case searchRepo(q: String)
+  case authUserRepos
 }
 
 
@@ -30,12 +31,13 @@ extension MoyaService: TargetType {
       case .tokenWith: return "/access_token"
       case .searchRepo: return "/search/repositories"
       case .authUser: return "/user"
+      case .authUserRepos: return "/user/repos"
     }
   }
   var method: Moya.Method {
     switch self {
       case .tokenWith: return .post
-      case .searchRepo, .authUser: return .get
+      case .searchRepo, .authUser, .authUserRepos: return .get
     }
   }
 
@@ -50,7 +52,7 @@ extension MoyaService: TargetType {
         ], encoding: URLEncoding.default)
       case .searchRepo(q: let q):
         return .requestParameters(parameters: ["q":q], encoding: URLEncoding.default)
-      case .authUser: return .requestPlain
+      case .authUser, .authUserRepos: return .requestPlain
     }
   }
 

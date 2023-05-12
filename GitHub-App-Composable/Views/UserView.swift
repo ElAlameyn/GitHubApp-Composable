@@ -5,11 +5,12 @@
 //  Created by Артем Калинкин on 25.02.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct UserView: View {
   let store: StoreOf<UserReducer>
+
   var body: some View {
     WithViewStore(self.store) { viewStore in
       VStack {
@@ -45,7 +46,6 @@ struct UserView: View {
           Spacer()
         }
 
-
         HStack {
           Text("Repositories")
             .font(.system(size: 25).bold())
@@ -73,22 +73,26 @@ struct UserView: View {
         Divider()
 
         List {
-          ForEach(0...4, id: \.self) { _ in
-            Color.mint.frame(maxWidth: .infinity, maxHeight: 40)
-              .listRowSeparator(.hidden)
+          ForEach(viewStore.userRepositories, id: \.self) { repo in
+            VStack {
+              HStack {
+                Text(repo.name)
+                  .padding(.leading, 10)
+                Spacer()
+              }
+              Divider()
+            }
+            .listRowSeparator(.hidden)
           }
         }
         .scrollContentBackground(.hidden)
-        .listStyle(.grouped)
-        .padding(.top, -15)
+        .listStyle(.inset)
 
         Spacer()
       }
       .navigationTitle("User Account")
       .navigationBarTitleDisplayMode(.large)
-      .onAppear {
-        viewStore.send(.onAppear)
-      }
+      .onAppear { viewStore.send(.onAppear) }
     }
   }
 }
