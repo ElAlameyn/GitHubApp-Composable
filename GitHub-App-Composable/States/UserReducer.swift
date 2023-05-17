@@ -12,12 +12,16 @@ struct UserReducer: ReducerProtocol {
   struct State: Equatable {
     var userAccount: UserAccount = .init()
     var userRepositories: [AuthUserRepositories] = .init(repeating: .mock, count: 10)
+    var repositoryShowOption: RepositoryShowOption = .owner
+
+    enum RepositoryShowOption { case owner, starred }
   }
 
   enum Action {
     case onAppear
     case userResponse(TaskResult<UserResponse>)
     case userRepositoryResponse(TaskResult<[GithubRepository]>)
+    case changeRepositoryFilter(State.RepositoryShowOption)
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
@@ -25,9 +29,6 @@ struct UserReducer: ReducerProtocol {
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
     switch action {
       case .onAppear:
-        // TODO: User Account request
-        /// Display them
-
         return .run { send in
           await withTaskGroup(of: Void.self, body: { group in
             group.addTask {
@@ -55,13 +56,15 @@ struct UserReducer: ReducerProtocol {
           linkToAccount: userResponse.htmlUrl
         )
         print("User response: \(userResponse)")
-      case .userResponse(.failure(let error)):
-        print("User error: \(error.localizedDescription)")
+      case .userResponse(.failure(let error)): print("User error: \(error.localizedDescription)")
       case .userRepositoryResponse(.success(let userRepositoriesReponse)):
         state.userRepositories = userRepositoriesReponse.map { AuthUserRepositories(name: $0.name) }
 
       case .userRepositoryResponse(.failure(let error)):
         print("User error: \(error.localizedDescription)")
+      case .changeRepositoryFilter(let option):
+        print("Changed option: \(option)")
+        state.repositoryShowOption = option
     }
     return .none
   }

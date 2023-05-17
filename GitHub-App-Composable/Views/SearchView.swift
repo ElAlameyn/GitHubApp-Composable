@@ -5,11 +5,10 @@
 //  Created by Артем Калинкин on 07.02.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct SearchView: View {
-
   let store: StoreOf<SearchReducer>
   @State var textFieldScaling = 0.0
   @FocusState var isSearchingFocused: Bool
@@ -21,43 +20,34 @@ struct SearchView: View {
       VStack {
         HStack {
           Button {
-              viewStore.send(.searchButtonTapped)
-            withAnimation {
-              textFieldScaling = viewStore.isSearchFieldAppeared ? 1.0 : 0.0
-            }
+            viewStore.send(.searchButtonTapped)
+            withAnimation { textFieldScaling = viewStore.isSearchFieldAppeared ? 1.0 : 0.0 }
           } label: {
-            Image(uiImage:
-                .init(systemName: "magnifyingglass")!
-              .withTintColor(.white, renderingMode: .alwaysOriginal)
-              .resize(targetSize: .init(width: 45, height: 40))
-            )
+            Image(systemName: "magnifyingglass")
+              .resizable()
+              .frame(width: 40, height: 40)
           }
           .padding()
-          
-          
-          TextField(
-            "Text",
-            text: viewStore
-              .binding(\.$searchTextFieldText)
-              .removeDuplicates()
-          )
-          .focused($isSearchingFocused)
-          .padding(.leading)
-          .padding(.trailing, 60)
-          .frame(maxWidth: .infinity, minHeight: 40)
-          .background(.white)
-          .cornerRadius(10)
-          .scaleEffect(textFieldScaling)
-          .overlay {
-            if !viewStore.isSearchFieldAppeared {
-              Text("Explore and find Repositories on Git")
-                .font(.title2.bold())
-                .multilineTextAlignment(.center)
-                .foregroundColor(.white)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+
+          TextField("Text", text: viewStore
+            .binding(\.$searchTextFieldText)
+            .removeDuplicates())
+            .focused($isSearchingFocused)
+            .padding(.leading)
+            .padding(.trailing, 60)
+            .frame(maxWidth: .infinity, minHeight: 40)
+            .background(.white)
+            .cornerRadius(10)
+            .scaleEffect(textFieldScaling)
+            .overlay {
+              if !viewStore.isSearchFieldAppeared {
+                Text("Explore and find Repositories on Git")
+                  .font(.title2.bold())
+                  .multilineTextAlignment(.center)
+                  .lineLimit(nil)
+                  .fixedSize(horizontal: false, vertical: true)
+              }
             }
-          }
 
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
 
@@ -66,11 +56,9 @@ struct SearchView: View {
             Button {
               dismiss()
             } label: {
-              Image(uiImage:
-                  .init(systemName: "gearshape")!
-                .withTintColor(.white, renderingMode: .alwaysOriginal)
-                .resize(targetSize: .init(width: 45, height: 45))
-              )
+              Image(systemName: "gearshape")
+                .resizable()
+                .frame(width: 45, height: 45)
             }
             .padding()
           }
@@ -83,7 +71,7 @@ struct SearchView: View {
               RepoView(title: repo.name, starsCount: repo.stargazersCount)
                 .swipeActions {
                   Button {
-                    //TODO: Add to favourites
+                    // TODO: Add to favourites
                   } label: {
                     Label("Star", systemImage: "star.fill")
                   }
@@ -99,43 +87,38 @@ struct SearchView: View {
           Spacer()
           Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")
             .font(.title2.bold())
-            .foregroundColor(.white)
             .padding()
 
           Text(!viewStore.isEmptySearchResponse ? "Click to upside \"Search button\"" : "Find smth else.")
             .font(.footnote.bold())
-            .foregroundColor(.white)
         } else {
           Spacer()
           ActivityIndicator(isAnimating: viewStore.binding(\.$isSearching), style: .large)
         }
 
         Spacer()
-
       }
+      .foregroundColor(.white)
       .navigationBarHidden(true)
       .background(Color.black.opacity(0.8))
-      .onAppear {
-//        viewStore.send(.onAppear)
+      .onAppear { //        viewStore.send(.onAppear) }
       }
     }
   }
 }
 
 struct RepoView: View {
-
   var title: String
   var starsCount: Int
 
   var body: some View {
     VStack {
       HStack(spacing: 0) {
-        Image(uiImage: .init(named: "repo")!
-          .withTintColor(.white, renderingMode: .alwaysOriginal)
-          .resize(targetSize: .init(width: 25, height: 40))
-        )
-        .padding(.leading, 10)
-        .padding(.trailing, 15)
+        Image("repo")
+          .resizable()
+          .frame(width: 25, height: 40)
+          .padding(.leading, 10)
+          .padding(.trailing, 15)
 
         Text(title)
           .font(.body)
@@ -153,7 +136,7 @@ struct RepoView: View {
             Text("\(starsCount)")
               .font(.footnote)
               .foregroundColor(.white)
-              .padding(.trailing , 20)
+              .padding(.trailing, 20)
               .padding(.top, 1)
           }
         }
@@ -165,10 +148,6 @@ struct RepoView: View {
     .listRowBackground(Color.clear)
   }
 }
-
-
-
-
 
 struct SearchView_Previews: PreviewProvider {
   static var previews: some View {

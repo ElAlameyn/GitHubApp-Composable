@@ -75,7 +75,7 @@ struct AuthView: View {
         .foregroundColor(.white)
 
       }
-      .background(Color.black.opacity(0.8))
+      .blackTheme()
       .sheet(isPresented: viewStore.binding(
         get: \.isWebViewPresented,
         send: .isWebViewDismissed)
