@@ -62,9 +62,10 @@ struct AuthReducer: ReducerProtocol {
         state.isWebViewPresented = false
         return .send(.authorizedWith(tokenResponse: response))
 
-      case .tokenResponse(.failure(_)):
+      case .tokenResponse(.failure(let error)):
         state.isAuthorized = false
         state.isWebViewPresented = false
+        print(error.localizedDescription)
     }
     return .none
   }

@@ -120,10 +120,14 @@ struct UserView: View {
 struct UserView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      UserView(store: .init(
-        initialState: .init(userAccount: .mock),
-        reducer: UserReducer()
-      ))
+      withDependencies {
+        $0.gitHubClient = .failValue
+      } operation: {
+        UserView(store: .init(
+          initialState: .init(userAccount: .mock),
+          reducer: UserReducer()
+        ))
+      }
     }
   }
 }

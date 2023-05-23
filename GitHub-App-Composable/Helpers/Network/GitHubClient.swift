@@ -15,21 +15,34 @@ import Moya
 struct GitHubClient<V: TargetType> {
   var provider = MoyaProvider<V>(plugins: [AccessTokenPlugin { _ in
     @KeychainStored(service: "app-auth-token") var token: String?
-     return token ?? ""
+    return token ?? ""
   }])
 
   func request<T: Decodable>(_ target: V, of type: T.Type) async -> AnyPublisher<T, Error> {
     provider.requestPublisher(target)
       .receive(on: DispatchQueue.main)
       .map(\.data)
-      .decode(type: type, decoder: {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return decoder
-      }())
+      .decode(type: type, decoder: JSONDecoder.snakeJsonDecoder)
       .mapError { $0 as? MoyaError ?? .underlying($0, nil) }
       .eraseToAnyPublisher()
   }
+}
+
+extension PluginType where Self == AccessTokenPlugin  {
+  static var tokenPlugin: PluginType {
+    AccessTokenPlugin { _ in
+      @KeychainStored(service: "app-auth-token") var token: String?
+      return token ?? ""
+    }
+  }
+}
+
+extension JSONDecoder {
+  static let snakeJsonDecoder: JSONDecoder = {
+    let decoder = JSONDecoder()
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    return decoder
+  }()
 }
 
 extension GitHubClient where V == MoyaService {
