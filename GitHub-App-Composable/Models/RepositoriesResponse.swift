@@ -20,7 +20,7 @@ struct RepositoriesResponse: Codable, Equatable {
 struct GithubRepository: Codable, Equatable {
   let id: Int
   let name: String
-  let size, stargazersCount, watchersCount: Int
+  let size, stargazersCount, watchersCount: Int?
 }
 
 // MARK: - License

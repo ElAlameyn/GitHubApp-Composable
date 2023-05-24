@@ -14,8 +14,8 @@
 		B562C2F429A7992000559233 /* ExpirationTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F329A7992000559233 /* ExpirationTokenModel.swift */; };
 		B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F529A7A73300559233 /* TaskResult+Extension.swift */; };
 		B56CA1DE2A14F6B300131219 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */; };
+		B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58153142A1D58CC00E34368 /* Moya+Extension.swift */; };
 		B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */; };
-		B58D573529A55B3E0079987C /* Publisher+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58D573429A55B3E0079987C /* Publisher+Extension.swift */; };
 		B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */; };
 		B5B6F1802997D283005727BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B6F17F2997D283005727BB /* Assets.xcassets */; };
 		B5B6F1832997D283005727BB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B6F1822997D283005727BB /* Preview Assets.xcassets */; };
@@ -50,8 +50,8 @@
 		B562C2F329A7992000559233 /* ExpirationTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationTokenModel.swift; sourceTree = "<group>"; };
 		B562C2F529A7A73300559233 /* TaskResult+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskResult+Extension.swift"; sourceTree = "<group>"; };
 		B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		B58153142A1D58CC00E34368 /* Moya+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Extension.swift"; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
-		B58D573429A55B3E0079987C /* Publisher+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Extension.swift"; sourceTree = "<group>"; };
 		B5B6F1782997D282005727BB /* GitHub-App-Composable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub-App-Composable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_App_ComposableApp.swift; sourceTree = "<group>"; };
 		B5B6F17F2997D283005727BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,9 +147,9 @@
 				B5B6F18D2997D29E005727BB /* UIImage+Extension.swift */,
 				B5B6F18E2997D29E005727BB /* String+Extension.swift */,
 				B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */,
-				B58D573429A55B3E0079987C /* Publisher+Extension.swift */,
 				B562C2F529A7A73300559233 /* TaskResult+Extension.swift */,
 				B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */,
+				B58153142A1D58CC00E34368 /* Moya+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -299,8 +299,8 @@
 				B5BE5D48299D2B6A00FF7CC9 /* ComposableAdaptive.swift in Sources */,
 				B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */,
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
-				B58D573529A55B3E0079987C /* Publisher+Extension.swift in Sources */,
 				B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */,
+				B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */,
 				B5FDD70629AA8E4F0085763E /* UserReducer.swift in Sources */,
 				B5FDD70429AA8E380085763E /* UserView.swift in Sources */,
 				B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */,

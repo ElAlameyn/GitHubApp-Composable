@@ -5,40 +5,42 @@
 //  Created by Артем Калинкин on 11.02.2023.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 @main
 struct GitHub_App_ComposableApp: App {
-    var body: some Scene {
-        WindowGroup {
+  var body: some Scene {
+    WindowGroup {
+      // MARK: -  UserView
 
-          // MARK: -  UserView
-//          NavigationView {
-//            UserView(store: .init(
-//              initialState: .init(),
-//              reducer: UserReducer()
-//            ))
-//          }
+          NavigationView {
+            UserView(store: .init(
+              initialState: .init(),
+              reducer: UserReducer()
+            ))
+          }
 
-          // MARK: - Search View
+      // MARK: - Search View
+
 //          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
 
-          // MARK: - App View
-            AppView(store:
-                .init(
-                  initialState: AppReducer.State(),
-                  reducer: AppReducer()
-                    .dependency(\.gitHubClient, .failValue)
-                )
-            )
+      // MARK: - App View
 
+//      AppView(store:
+//        .init(
+//          initialState: AppReducer.State(),
+//          reducer: AppReducer()
+//            .dependency(\.gitHubClient, .failValue)
+//        )
+//      )
 
-          // MARK: - Meet View
+      // MARK: - Meet View
+
 //          MeetView(store: StoreOf<AuthReducer>(
 //            initialState: .init(),
 //            reducer: AuthReducer())
 //          )
-        }
     }
+  }
 }

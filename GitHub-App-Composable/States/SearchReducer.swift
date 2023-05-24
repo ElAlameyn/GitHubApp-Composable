@@ -71,7 +71,7 @@ struct SearchReducer: ReducerProtocol {
               await send(.onSuccessSearchRequest(repos: responseResult.items.map {
                 Repository(
                   name: $0.name,
-                  stargazersCount: $0.stargazersCount
+                  stargazersCount: $0.stargazersCount ?? 0
                 )
               }))
               if responseResult.items.isEmpty { await send(.onEmptyResponse) }

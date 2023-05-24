@@ -13,7 +13,6 @@ struct UserView: View {
 
   init(store: StoreOf<UserReducer>) {
     self.store = store
-
     UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.white]
   }
 
@@ -67,17 +66,18 @@ struct UserView: View {
                 .font(.system(size: 25))
                 .multilineTextAlignment(.center)
                 .foregroundColor(viewStore.repositoryShowOption == .owner ? Color.red : .white)
-                .onTapGesture { viewStore.send(.changeRepositoryFilter(.owner))}
+                .onTapGesture { viewStore.send(.changeRepositoryFilter(.owner)) }
               Text("Owner")
                 .font(.footnote)
             }
             .padding(.trailing)
 
+
             VStack(spacing: 5) {
               Image(systemName: "star.circle")
                 .font(.system(size: 25))
                 .multilineTextAlignment(.center)
-                .onTapGesture { viewStore.send(.changeRepositoryFilter(.starred))}
+                .onTapGesture { viewStore.send(.changeRepositoryFilter(.starred)) }
                 .foregroundColor(viewStore.repositoryShowOption == .starred ? Color.red : .white)
               Text("Starred")
                 .font(.footnote)
@@ -109,6 +109,9 @@ struct UserView: View {
         }
         .onAppear { viewStore.send(.onAppear) }
         .blackTheme()
+        .alert(isPresented: viewStore.binding(\.alertState.$isErrorAlertPresented), content: {
+          Alert(title: Text(viewStore.alertState.text))
+        })
       }
       .foregroundColor(Color.white)
       .navigationBarTitleDisplayMode(.large)
@@ -120,14 +123,11 @@ struct UserView: View {
 struct UserView_Previews: PreviewProvider {
   static var previews: some View {
     NavigationView {
-      withDependencies {
-        $0.gitHubClient = .failValue
-      } operation: {
-        UserView(store: .init(
-          initialState: .init(userAccount: .mock),
-          reducer: UserReducer()
-        ))
-      }
+      UserView(store: .init(
+        initialState: .init(userAccount: .mock),
+        reducer: UserReducer()
+//          .dependency(\.gitHubClient, .failValue)
+      ))
     }
   }
 }

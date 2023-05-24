@@ -28,14 +28,6 @@ struct GitHubClient<V: TargetType> {
   }
 }
 
-extension PluginType where Self == AccessTokenPlugin  {
-  static var tokenPlugin: PluginType {
-    AccessTokenPlugin { _ in
-      @KeychainStored(service: "app-auth-token") var token: String?
-      return token ?? ""
-    }
-  }
-}
 
 extension JSONDecoder {
   static let snakeJsonDecoder: JSONDecoder = {

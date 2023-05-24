@@ -17,20 +17,6 @@ extension DependencyValues {
   }
 }
 
-extension Endpoint {
-  static func withStubResponse<V: TargetType>(target: V, _ stubResponse: SampleResponseClosure) -> Endpoint {
-    return Endpoint(
-      url: URL(target: target).absoluteString,
-      sampleResponseClosure: {
-        .networkError(NSError(domain: "This is my own custom error", code: 408))
-      },
-      method: target.method,
-      task: target.task,
-      httpHeaderFields: target.headers
-    )
-  }
-}
-
 extension GitHubClient: TestDependencyKey where V == MoyaService {
   static var failValue: GitHubClient<MoyaService> {
     let endpointClosure = { (target: V) -> Endpoint in
@@ -40,12 +26,19 @@ extension GitHubClient: TestDependencyKey where V == MoyaService {
           return .withStubResponse(target: target) {
             .networkError(NSError(domain: "This is my own custom error", code: 408))
           }
+        case .authUser:
+          return .withStubResponse(target: target) {
+            .networkError(NSError(domain: "This is my own custom error", code: 408))
+          }
         default: return defaultEndpoint
       }
     }
 
-    return GitHubClient<MoyaService>(
-      provider: .init(endpointClosure: endpointClosure, stubClosure: MoyaProvider.immediatelyStub, plugins: [AccessTokenPlugin.tokenPlugin])
+    return GitHubClient<MoyaService>(provider: .init(
+      endpointClosure: endpointClosure,
+      stubClosure: MoyaProvider.immediatelyStub,
+      plugins: [AccessTokenPlugin.tokenPlugin]
+    )
     )
   }
 }

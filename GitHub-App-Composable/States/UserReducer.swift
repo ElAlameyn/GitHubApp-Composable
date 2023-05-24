@@ -10,71 +10,81 @@ import Foundation
 
 struct UserReducer: ReducerProtocol {
   struct State: Equatable {
+    enum RepositoryShowOption { case owner, starred }
+
+    struct AlertState: Equatable {
+      @BindingState var isErrorAlertPresented = false
+      var text: String = "Some error occured"
+    }
+
     var userAccount: UserAccount = .init()
     var userRepositories: [AuthUserRepositories] = .init(repeating: .mock, count: 10)
     var repositoryShowOption: RepositoryShowOption = .owner
-
-    enum RepositoryShowOption { case owner, starred }
+    var alertState: AlertState = .init()
   }
 
-  enum Action {
+  enum Action: BindableAction {
     case onAppear
     case userResponse(TaskResult<UserResponse>)
     case userRepositoryResponse(TaskResult<[GithubRepository]>)
     case changeRepositoryFilter(State.RepositoryShowOption)
+    case binding(BindingAction<State>)
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
 
-  func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
-    switch action {
-      case .onAppear:
-        return .run { send in
-          await withTaskGroup(of: Void.self, body: { group in
-            group.addTask {
-              await send(.userResponse(TaskResult {
-                await gitHubClient
-                  .request(.authUser, of: UserResponse.self)
-                  .values
-              }))
-            }
+  var body: some ReducerProtocol<State, Action> {
+    BindingReducer()
 
-            group.addTask {
-              await send(.userRepositoryResponse(TaskResult {
-                await gitHubClient
-                  .request(.authUserRepos, of: [GithubRepository].self)
-                  .values
-              }))
-            }
-          })
-        }
+    Reduce { state, action in
+      switch action {
+        case .onAppear:
+          return .run { send in
+            await withTaskGroup(of: Void.self, body: { group in
+              group.addTask {
+                await send(.userResponse(TaskResult {
+                  await gitHubClient
+                    .request(.authUser, of: UserResponse.self)
+                    .values
+                }))
+              }
 
-      case .userResponse(.success(let userResponse)):
-        state.userAccount = .init(
-          name: userResponse.login,
-          email: userResponse.email,
-          linkToAccount: userResponse.htmlUrl
-        )
-        print("User response: \(userResponse)")
-      case .userResponse(.failure(let error)): print("User error: \(error.localizedDescription)")
-      case .userRepositoryResponse(.success(let userRepositoriesReponse)):
-        state.userRepositories = userRepositoriesReponse.map { AuthUserRepositories(name: $0.name) }
+              group.addTask {
+                await send(.userRepositoryResponse(TaskResult {
+                  await gitHubClient
+                    .request(.authUserRepos, of: [GithubRepository].self)
+                    .values
+                }))
+              }
+            })
+          }
 
-      case .userRepositoryResponse(.failure(let error)):
-        print("User error: \(error.localizedDescription)")
-      case .changeRepositoryFilter(let option):
-        print("Changed option: \(option)")
-        state.repositoryShowOption = option
+        case .userResponse(.success(let userResponse)):
+          state.userAccount = .init(
+            name: userResponse.login,
+            email: userResponse.email,
+            linkToAccount: userResponse.htmlUrl
+          )
+          print("User response: \(userResponse)")
+        case .changeRepositoryFilter(let option): state.repositoryShowOption = option
+        case .userRepositoryResponse(.success(let userRepositoriesReponse)):
+          state.userRepositories = userRepositoriesReponse.map { AuthUserRepositories(name: $0.name) }
+        case .userRepositoryResponse(.failure(let error)),
+             .userResponse(.failure(let error)):
+          state.alertState.isErrorAlertPresented = true
+          state.alertState.text = error.localizedDescription
+        case .binding: break
+      }
+      return .none
     }
-    return .none
   }
 }
 
 extension UserReducer {
   struct AuthUserRepositories: Hashable {
-    var name: String = ""
-
     static let mock = Self(name: "Unowned")
+
+    var name: String = ""
   }
 
   struct UserAccount: Hashable {
