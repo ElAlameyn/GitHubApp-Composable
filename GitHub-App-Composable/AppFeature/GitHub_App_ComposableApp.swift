@@ -13,27 +13,26 @@ struct GitHub_App_ComposableApp: App {
   var body: some Scene {
     WindowGroup {
       // MARK: -  UserView
-
-          NavigationView {
-            UserView(store: .init(
-              initialState: .init(),
-              reducer: UserReducer()
-            ))
-          }
-
+//
+//          NavigationView {
+//            UserView(store: .init(
+//              initialState: .init(),
+//              reducer: UserReducer()
+//            ))
+//          }
+//
       // MARK: - Search View
 
 //          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
 
       // MARK: - App View
 
-//      AppView(store:
-//        .init(
-//          initialState: AppReducer.State(),
-//          reducer: AppReducer()
-//            .dependency(\.gitHubClient, .failValue)
-//        )
-//      )
+      AppView(store:
+        .init(
+          initialState: AppReducer.State(),
+          reducer: AppReducer()
+        )
+      )
 
       // MARK: - Meet View
 

@@ -15,6 +15,17 @@ struct SearchView: View {
 
   @Environment(\.dismiss) var dismiss
 
+  func shouldDisplayGear(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool { !viewStore.isSearchFieldAppeared }
+
+  func shouldDisplaySearchedRepos(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
+    !viewStore.repositories.isEmpty && !viewStore.isSearching
+  }
+
+  func shouldDisplayEmptyResponseMessage(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
+    !viewStore.isSearching || viewStore.searchTextFieldText.isEmpty
+  }
+
+
   var body: some View {
     WithViewStore(self.store) { viewStore in
       VStack {
@@ -37,6 +48,7 @@ struct SearchView: View {
             .padding(.trailing, 60)
             .frame(maxWidth: .infinity, minHeight: 40)
             .background(.white)
+            .foregroundColor(.black)
             .cornerRadius(10)
             .scaleEffect(textFieldScaling)
             .overlay {
@@ -51,9 +63,9 @@ struct SearchView: View {
 
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
 
-          // Display Gear
-          if !viewStore.isSearchFieldAppeared {
+          if shouldDisplayGear(viewStore) {
             Button {
+              print("Okey")
               dismiss()
             } label: {
               Image(systemName: "gearshape")
@@ -64,8 +76,7 @@ struct SearchView: View {
           }
         }
 
-        // Repositories Output
-        if !viewStore.repositories.isEmpty && !viewStore.isSearching {
+        if shouldDisplaySearchedRepos(viewStore) {
           List {
             ForEach(viewStore.repositories, id: \.self) { repo in
               RepoView(title: repo.name, starsCount: repo.stargazersCount)
@@ -82,8 +93,8 @@ struct SearchView: View {
           .scrollContentBackground(.hidden)
           .listStyle(.grouped)
           .padding(.top, -10)
-          // Empty Response
-        } else if !viewStore.isSearching || viewStore.searchTextFieldText.isEmpty {
+        }
+        else if shouldDisplayEmptyResponseMessage(viewStore) {
           Spacer()
           Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")
             .font(.title2.bold())
@@ -107,50 +118,9 @@ struct SearchView: View {
   }
 }
 
-struct RepoView: View {
-  var title: String
-  var starsCount: Int
-
-  var body: some View {
-    VStack {
-      HStack(spacing: 0) {
-        Image("repo")
-          .resizable()
-          .frame(width: 25, height: 40)
-          .padding(.leading, 10)
-          .padding(.trailing, 15)
-
-        Text(title)
-          .font(.body)
-          .foregroundColor(.white)
-          .multilineTextAlignment(.leading)
-
-        Spacer()
-
-        VStack {
-          Spacer()
-          HStack(spacing: 3) {
-            Spacer().frame(width: 10)
-            Image(systemName: "star.fill")
-              .foregroundColor(.yellow)
-            Text("\(starsCount)")
-              .font(.footnote)
-              .foregroundColor(.white)
-              .padding(.trailing, 20)
-              .padding(.top, 1)
-          }
-        }
-      }
-      Divider()
-        .overlay(.white)
-        .frame(maxWidth: .infinity)
-    }
-    .listRowBackground(Color.clear)
-  }
-}
-
 struct SearchView_Previews: PreviewProvider {
   static var previews: some View {
     SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
   }
 }
+

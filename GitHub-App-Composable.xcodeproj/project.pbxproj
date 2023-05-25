@@ -15,7 +15,8 @@
 		B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F529A7A73300559233 /* TaskResult+Extension.swift */; };
 		B56CA1DE2A14F6B300131219 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */; };
 		B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58153142A1D58CC00E34368 /* Moya+Extension.swift */; };
-		B581531D2A1F716200E34368 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581531C2A1F716200E34368 /* Tests.swift */; };
+		B581531D2A1F716200E34368 /* SearchFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581531C2A1F716200E34368 /* SearchFeatureTests.swift */; };
+		B581532C2A1F9DD200E34368 /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581532B2A1F9DD200E34368 /* RepoView.swift */; };
 		B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */; };
 		B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */; };
 		B5B6F1802997D283005727BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B6F17F2997D283005727BB /* Assets.xcassets */; };
@@ -32,7 +33,7 @@
 		B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1A22997D2AF005727BB /* WebView.swift */; };
 		B5B6F1A82997D32D005727BB /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1A72997D32D005727BB /* CombineMoya */; };
 		B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = B5B6F1AA2997D353005727BB /* ComposableArchitecture */; };
-		B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */; };
+		B5B6F1B22997F222005727BB /* GitHubClientTestValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1B12997F222005727BB /* GitHubClientTestValues.swift */; };
 		B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F1B32997F258005727BB /* MoyaService.swift */; };
 		B5BE5D46299D28DE00FF7CC9 /* KeychainStored in Frameworks */ = {isa = PBXBuildFile; productRef = B5BE5D45299D28DE00FF7CC9 /* KeychainStored */; };
 		B5BE5D48299D2B6A00FF7CC9 /* KeychaingStored+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BE5D47299D2B6A00FF7CC9 /* KeychaingStored+Extension.swift */; };
@@ -62,7 +63,8 @@
 		B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		B58153142A1D58CC00E34368 /* Moya+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Moya+Extension.swift"; sourceTree = "<group>"; };
 		B581531A2A1F716200E34368 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B581531C2A1F716200E34368 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		B581531C2A1F716200E34368 /* SearchFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeatureTests.swift; sourceTree = "<group>"; };
+		B581532B2A1F9DD200E34368 /* RepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoView.swift; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		B5B6F1782997D282005727BB /* GitHub-App-Composable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub-App-Composable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_App_ComposableApp.swift; sourceTree = "<group>"; };
@@ -78,7 +80,7 @@
 		B5B6F1A02997D2AF005727BB /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		B5B6F1A12997D2AF005727BB /* AuthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		B5B6F1A22997D2AF005727BB /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GitHubClient+Composable.swift"; sourceTree = "<group>"; };
+		B5B6F1B12997F222005727BB /* GitHubClientTestValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClientTestValues.swift; sourceTree = "<group>"; };
 		B5B6F1B32997F258005727BB /* MoyaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaService.swift; sourceTree = "<group>"; };
 		B5BE5D47299D2B6A00FF7CC9 /* KeychaingStored+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychaingStored+Extension.swift"; sourceTree = "<group>"; };
 		B5BE5D49299E83EC00FF7CC9 /* SearchReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReducer.swift; sourceTree = "<group>"; };
@@ -111,7 +113,7 @@
 		B581531B2A1F716200E34368 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B581531C2A1F716200E34368 /* Tests.swift */,
+				B581531C2A1F716200E34368 /* SearchFeatureTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -121,6 +123,7 @@
 			children = (
 				B5B6F1A02997D2AF005727BB /* SearchView.swift */,
 				B5BE5D49299E83EC00FF7CC9 /* SearchReducer.swift */,
+				B581532B2A1F9DD200E34368 /* RepoView.swift */,
 			);
 			path = SearchFeature;
 			sourceTree = "<group>";
@@ -242,7 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B6F1952997D2A3005727BB /* GitHubClient.swift */,
-				B5B6F1B12997F222005727BB /* GitHubClient+Composable.swift */,
+				B5B6F1B12997F222005727BB /* GitHubClientTestValues.swift */,
 				B5B6F1B32997F258005727BB /* MoyaService.swift */,
 				B58153142A1D58CC00E34368 /* Moya+Extension.swift */,
 				B562C2F529A7A73300559233 /* TaskResult+Extension.swift */,
@@ -360,7 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B581531D2A1F716200E34368 /* Tests.swift in Sources */,
+				B581531D2A1F716200E34368 /* SearchFeatureTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +385,7 @@
 				B5B6F1902997D29E005727BB /* String+Extension.swift in Sources */,
 				B5B6F18F2997D29E005727BB /* UIImage+Extension.swift in Sources */,
 				B5B6F1982997D2A3005727BB /* Logger.swift in Sources */,
+				B581532C2A1F9DD200E34368 /* RepoView.swift in Sources */,
 				B56CA1DE2A14F6B300131219 /* ViewModifiers.swift in Sources */,
 				B515030329A3D5B900D87787 /* AsyncManager.swift in Sources */,
 				B5BE5D48299D2B6A00FF7CC9 /* KeychaingStored+Extension.swift in Sources */,
@@ -393,7 +397,7 @@
 				B5FDD70429AA8E380085763E /* UserView.swift in Sources */,
 				B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */,
 				B531716F2998F40500BE5482 /* AppView.swift in Sources */,
-				B5B6F1B22997F222005727BB /* GitHubClient+Composable.swift in Sources */,
+				B5B6F1B22997F222005727BB /* GitHubClientTestValues.swift in Sources */,
 				B5B6F1B42997F258005727BB /* MoyaService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

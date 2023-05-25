@@ -15,7 +15,6 @@ struct Repository: Equatable, Hashable {
 }
 
 struct SearchReducer: ReducerProtocol {
-
   struct State: Equatable {
     var repositories: [Repository] = []
     var isSearchFieldAppeared = false
@@ -29,69 +28,66 @@ struct SearchReducer: ReducerProtocol {
     case searchButtonTapped
     case optionButtonTapped
     case repositoryItemTapped
-    case onSuccessSearchRequest(repos: [Repository])
-    case onEmptyResponse
+    case searchResponse(TaskResult<RepositoriesResponse>)
     case onAppear
   }
 
-  @Dependency(\.gitHubClient) var gitHubClient
-
   enum SearchID {}
+
+  @Dependency(\.gitHubClient) var gitHubClient
+  @Dependency(\.mainQueue) var mainQueue
 
   var body: some ReducerProtocol<State, Action> {
     BindingReducer()
 
     Reduce { state, action in
-
       switch action {
         case .searchButtonTapped:
           state.isSearchFieldAppeared.toggle()
-        case .optionButtonTapped, .repositoryItemTapped:
-          break
+        case .optionButtonTapped, .repositoryItemTapped: break
 
-        case let .onSuccessSearchRequest(repos):
-          state.repositories = repos
         case .binding(\.$isSearching):
           print("Binded isSearchin: \(state.isSearching)")
-          break
 
         case .binding(\.$searchTextFieldText):
           let text = state.searchTextFieldText
           return .run { send in
-
             await send(.set(\.$isSearching, true))
 
-            async let value = await gitHubClient
-              .request(.searchRepo(q: text), of: RepositoriesResponse.self)
-              .removeDuplicates()
-              .eraseToAnyPublisher()
+            await send(.searchResponse(TaskResult {
+              await gitHubClient
+                .request(.searchRepo(q: text), of: RepositoriesResponse.self)
+                .removeDuplicates()
+                .eraseToAnyPublisher()
+                .values
+            }))
 
-            if let responseResult = await AsyncManager.extract(value.values) {
-
-              await send(.onSuccessSearchRequest(repos: responseResult.items.map {
-                Repository(
-                  name: $0.name,
-                  stargazersCount: $0.stargazersCount ?? 0
-                )
-              }))
-              if responseResult.items.isEmpty { await send(.onEmptyResponse) }
-
-              await send(.set(\.$isSearching, false))
-            }
+            await send(.set(\.$isSearching, false))
           }
-          .debounce(id: SearchID.self, for: 0.5, scheduler: RunLoop.main)
+          .debounce(id: SearchID.self, for: 0.5, scheduler: mainQueue)
 
-        case .binding(_): return .none
+        case .binding: return .none
 
         case .onAppear: break
 //          gitHubClient.setToken("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")
 
-        case .onEmptyResponse:
-          state.isEmptySearchResponse = true
+        case .searchResponse(.success(let response)):
+          state.isEmptySearchResponse = response.items.isEmpty
 
+          state.repositories = response.items.map {
+            Repository(
+              name: $0.name,
+              stargazersCount: $0.stargazersCount ?? 0
+            )
+          }
+
+          return .send(.set(\.$isSearching, false))
+        case .searchResponse(.failure(let error)):
+          print("Error: \(error.localizedDescription)")
+          state.repositories = []
+          return .send(.set(\.$isSearching, false))
       }
       return .none
     }
   }
 }
-

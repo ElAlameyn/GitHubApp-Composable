@@ -23,7 +23,7 @@ struct GitHubClient<V: TargetType> {
       .receive(on: DispatchQueue.main)
       .map(\.data)
       .decode(type: type, decoder: JSONDecoder.snakeJsonDecoder)
-      .mapError { $0 as? MoyaError ?? .underlying($0, nil) }
+      .mapError { $0 as? MoyaError ?? $0 }
       .eraseToAnyPublisher()
   }
 }

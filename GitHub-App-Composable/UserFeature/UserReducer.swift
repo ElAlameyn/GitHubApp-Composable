@@ -23,7 +23,7 @@ struct UserReducer: ReducerProtocol {
     var alertState: AlertState = .init()
   }
 
-  enum Action: BindableAction {
+  enum Action: BindableAction, Equatable {
     case onAppear
     case authUserAccountResponse(TaskResult<UserResponse>)
     case authUserRepositoriesResponse(TaskResult<[GithubRepository]>)
@@ -63,7 +63,7 @@ struct UserReducer: ReducerProtocol {
           state.userAccount = .init(
             name: userResponse.login,
             email: userResponse.email,
-            linkToAccount: userResponse.htmlUrl
+            linkToAccount: userResponse.htmlUrl 
           )
           print("User response: \(userResponse)")
         case .changeRepositoryFilter(let option): state.repositoryShowOption = option

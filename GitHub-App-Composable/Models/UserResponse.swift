@@ -8,12 +8,13 @@
 import Foundation
 
 // MARK: - UserResponse
-struct UserResponse: Codable {
+struct UserResponse: Codable, Equatable {
   let login: String
   let id: Int
   let nodeId: String?
   let avatarUrl: String?
-  let url, htmlUrl: String
+  let url: String?
+  let htmlUrl: String
   let followersUrl, starredUrl: String?
   let subscriptionsUrl, organizationsUrl, reposUrl: String?
   let location, email: String?
