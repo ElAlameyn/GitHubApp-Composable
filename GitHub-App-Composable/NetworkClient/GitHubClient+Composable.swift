@@ -26,7 +26,7 @@ extension GitHubClient: TestDependencyKey where V == MoyaService {
           return .withStubResponse(target: target) {
             .networkError(NSError(domain: "This is my own custom error", code: 408))
           }
-        case .authUser:
+        case .authUserAccount:
           return .withStubResponse(target: target) {
             .networkError(NSError(domain: "This is my own custom error", code: 408))
           }

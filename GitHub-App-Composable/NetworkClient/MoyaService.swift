@@ -10,7 +10,7 @@ import Moya
 
 enum MoyaService {
   case tokenWith(code: String, clientId: String, clientSecret: String)
-  case authUser
+  case authUserAccount
   case searchRepo(q: String)
   case authUserRepos
 }
@@ -27,7 +27,7 @@ extension MoyaService: TargetType {
     switch self {
       case .tokenWith: return "/access_token"
       case .searchRepo: return "/search/repositories"
-      case .authUser: return "/user"
+      case .authUserAccount: return "/user"
       case .authUserRepos: return "/user/repos"
     }
   }
@@ -35,7 +35,7 @@ extension MoyaService: TargetType {
   var method: Moya.Method {
     switch self {
       case .tokenWith: return .post
-      case .searchRepo, .authUser, .authUserRepos: return .get
+      case .searchRepo, .authUserAccount, .authUserRepos: return .get
     }
   }
 
@@ -49,7 +49,7 @@ extension MoyaService: TargetType {
         ], encoding: URLEncoding.default)
       case .searchRepo(q: let q):
         return .requestParameters(parameters: ["q": q], encoding: URLEncoding.default)
-      case .authUser, .authUserRepos: return .requestPlain
+      case .authUserAccount, .authUserRepos: return .requestPlain
     }
   }
 

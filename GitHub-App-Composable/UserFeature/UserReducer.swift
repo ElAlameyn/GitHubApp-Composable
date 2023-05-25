@@ -25,8 +25,8 @@ struct UserReducer: ReducerProtocol {
 
   enum Action: BindableAction {
     case onAppear
-    case userResponse(TaskResult<UserResponse>)
-    case userRepositoryResponse(TaskResult<[GithubRepository]>)
+    case authUserAccountResponse(TaskResult<UserResponse>)
+    case authUserRepositoriesResponse(TaskResult<[GithubRepository]>)
     case changeRepositoryFilter(State.RepositoryShowOption)
     case binding(BindingAction<State>)
   }
@@ -42,15 +42,15 @@ struct UserReducer: ReducerProtocol {
           return .run { send in
             await withTaskGroup(of: Void.self, body: { group in
               group.addTask {
-                await send(.userResponse(TaskResult {
+                await send(.authUserAccountResponse(TaskResult {
                   await gitHubClient
-                    .request(.authUser, of: UserResponse.self)
+                    .request(.authUserAccount, of: UserResponse.self)
                     .values
                 }))
               }
 
               group.addTask {
-                await send(.userRepositoryResponse(TaskResult {
+                await send(.authUserRepositoriesResponse(TaskResult {
                   await gitHubClient
                     .request(.authUserRepos, of: [GithubRepository].self)
                     .values
@@ -59,7 +59,7 @@ struct UserReducer: ReducerProtocol {
             })
           }
 
-        case .userResponse(.success(let userResponse)):
+        case .authUserAccountResponse(.success(let userResponse)):
           state.userAccount = .init(
             name: userResponse.login,
             email: userResponse.email,
@@ -67,10 +67,10 @@ struct UserReducer: ReducerProtocol {
           )
           print("User response: \(userResponse)")
         case .changeRepositoryFilter(let option): state.repositoryShowOption = option
-        case .userRepositoryResponse(.success(let userRepositoriesReponse)):
+        case .authUserRepositoriesResponse(.success(let userRepositoriesReponse)):
           state.userRepositories = userRepositoriesReponse.map { AuthUserRepositories(name: $0.name) }
-        case .userRepositoryResponse(.failure(let error)),
-             .userResponse(.failure(let error)):
+        case .authUserRepositoriesResponse(.failure(let error)),
+             .authUserAccountResponse(.failure(let error)):
           state.alertState.isErrorAlertPresented = true
           state.alertState.text = error.localizedDescription
         case .binding: break
