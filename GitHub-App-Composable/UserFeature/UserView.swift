@@ -109,9 +109,7 @@ struct UserView: View {
         }
         .onAppear { viewStore.send(.onAppear) }
         .blackTheme()
-        .alert(isPresented: viewStore.binding(\.alertState.$isErrorAlertPresented), content: {
-          Alert(title: Text(viewStore.alertState.text))
-        })
+        .alert(self.store.scope(state: \.alert), dismiss: .dismissAlert)
       }
       .foregroundColor(Color.white)
       .navigationBarTitleDisplayMode(.large)
@@ -126,7 +124,7 @@ struct UserView_Previews: PreviewProvider {
       UserView(store: .init(
         initialState: .init(userAccount: .mock),
         reducer: UserReducer()
-//          .dependency(\.gitHubClient, .failValue)
+          .dependency(\.gitHubClient, .failValue)
       ))
     }
   }

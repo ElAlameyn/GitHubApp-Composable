@@ -15,6 +15,7 @@ struct AppReducer: ReducerProtocol {
     @KeychainStored(service: "app-auth-token-response") var tokenModel: ExpirationTokenModel?
     var authState: AuthReducer.State? = nil
     var searchState: SearchReducer.State = .init()
+    var userState: UserReducer.State = .init()
 
     var nonNilAuthState: AuthReducer.State {
       get { authState ?? AuthReducer.State() }
@@ -26,6 +27,7 @@ struct AppReducer: ReducerProtocol {
     case quitApp
     case authorization(AuthReducer.Action)
     case searchAction(SearchReducer.Action)
+    case userAction(UserReducer.Action)
     case checkIfTokenExpired
   }
 
@@ -34,6 +36,7 @@ struct AppReducer: ReducerProtocol {
   var body: some ReducerProtocol<State, Action> {
     Scope(state: \.nonNilAuthState, action: /Action.authorization) { AuthReducer() }
     Scope(state: \.searchState, action: /Action.searchAction) { SearchReducer() }
+    Scope(state: \.userState, action: /Action.userAction) { UserReducer() }
     Reduce { state, action in
       switch action {
         case .quitApp:
@@ -51,6 +54,7 @@ struct AppReducer: ReducerProtocol {
           checkTokenExpiration(state: &state)
 
         case .authorization(_), .searchAction: break
+        case .userAction(_): break
       }
       return .none
     }

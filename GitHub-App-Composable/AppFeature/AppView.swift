@@ -37,13 +37,10 @@ struct AppView: View {
                 TabView(selection: $selectedTab) {
                   switch selectedTab {
                     case .magnifyingglass:
-                      SearchView(store: store.scope(
-                        state: \.searchState,
-                        action: AppReducer.Action.searchAction
-                      ))
+                      SearchView(store: store.scope( state: \.searchState, action: AppReducer.Action.searchAction ))
                         .tag(selectedTab)
                     case .star:
-                      Color.green.ignoresSafeArea()
+                      UserView(store: store.scope(state: \.userState, action: AppReducer.Action.userAction))
                         .tag(selectedTab)
                     case .person:
                       Color.blue.ignoresSafeArea()

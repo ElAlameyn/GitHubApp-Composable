@@ -11,16 +11,10 @@ import Foundation
 struct UserReducer: ReducerProtocol {
   struct State: Equatable {
     enum RepositoryShowOption { case owner, starred }
-
-    struct AlertState: Equatable {
-      @BindingState var isErrorAlertPresented = false
-      var text: String = "Some error occured"
-    }
-
     var userAccount: UserAccount = .init()
     var userRepositories: [AuthUserRepositories] = .init(repeating: .mock, count: 10)
     var repositoryShowOption: RepositoryShowOption = .owner
-    var alertState: AlertState = .init()
+    var alert: AlertState<Action>?
   }
 
   enum Action: BindableAction, Equatable {
@@ -29,6 +23,7 @@ struct UserReducer: ReducerProtocol {
     case authUserRepositoriesResponse(TaskResult<[GithubRepository]>)
     case changeRepositoryFilter(State.RepositoryShowOption)
     case binding(BindingAction<State>)
+    case dismissAlert
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
@@ -63,7 +58,7 @@ struct UserReducer: ReducerProtocol {
           state.userAccount = .init(
             name: userResponse.login,
             email: userResponse.email,
-            linkToAccount: userResponse.htmlUrl 
+            linkToAccount: userResponse.htmlUrl
           )
           print("User response: \(userResponse)")
         case .changeRepositoryFilter(let option): state.repositoryShowOption = option
@@ -71,31 +66,15 @@ struct UserReducer: ReducerProtocol {
           state.userRepositories = userRepositoriesReponse.map { AuthUserRepositories(name: $0.name) }
         case .authUserRepositoriesResponse(.failure(let error)),
              .authUserAccountResponse(.failure(let error)):
-          state.alertState.isErrorAlertPresented = true
-          state.alertState.text = error.localizedDescription
+          state.alert = AlertState(
+            title: TextState("Ooops! Some error occured"),
+            message: .init(error.localizedDescription),
+            dismissButton: .default(TextState("Ok"), action: .send(.dismissAlert))
+          )
         case .binding: break
+        case .dismissAlert: state.alert = nil
       }
       return .none
     }
-  }
-}
-
-extension UserReducer {
-  struct AuthUserRepositories: Hashable {
-    static let mock = Self(name: "Unowned")
-
-    var name: String = ""
-  }
-
-  struct UserAccount: Hashable {
-    static let mock = Self(
-      name: "Blob Feld",
-      email: "artem.k.3008@gmail.com",
-      linkToAccount: "https://test/test/test/ElAlameyn"
-    )
-
-    var name: String = ""
-    var email: String?
-    var linkToAccount: String = ""
   }
 }
