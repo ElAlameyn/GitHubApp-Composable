@@ -18,7 +18,7 @@ extension UserReducer {
     static let mock = Self(
       name: "Blob Feld",
       email: "artem.k.3008@gmail.com",
-      linkToAccount: "https://test/test/test/ElAlameyn"
+      linkToAccount: "https://www.google.ru"
     )
 
     var name: String = ""

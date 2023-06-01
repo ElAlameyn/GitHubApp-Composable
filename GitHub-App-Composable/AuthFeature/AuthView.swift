@@ -5,9 +5,9 @@
 //  Created by Артем Калинкин on 15.12.2022.
 //
 
-import SwiftUI
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
+import SwiftUI
 
 struct AuthView: View {
 //  @State private var isLinkActive = false
@@ -73,7 +73,6 @@ struct AuthView: View {
         }
         .multilineTextAlignment(.center)
         .foregroundColor(.white)
-
       }
       .blackTheme()
       .sheet(isPresented: viewStore.binding(
@@ -97,7 +96,6 @@ struct AuthView: View {
   }
 }
 
-
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     AuthView(store: StoreOf<AuthReducer>(
@@ -107,8 +105,3 @@ struct ContentView_Previews: PreviewProvider {
     )
   }
 }
-
-
-
-
-

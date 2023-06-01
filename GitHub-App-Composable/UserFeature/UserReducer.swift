@@ -15,6 +15,7 @@ struct UserReducer: ReducerProtocol {
     var userRepositories: [AuthUserRepositories] = .init(repeating: .mock, count: 10)
     var repositoryShowOption: RepositoryShowOption = .owner
     var alert: AlertState<Action>?
+    @BindingState var isSheetPresented: Bool = false
   }
 
   enum Action: BindableAction, Equatable {

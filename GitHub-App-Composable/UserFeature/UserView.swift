@@ -36,13 +36,19 @@ struct UserView: View {
                 .font(.system(size: 20).bold())
               viewStore.userAccount.email.map { Text($0) }
 
-              // TODO: Open webView when link is tapped
               Text(viewStore.userAccount.linkToAccount)
                 .font(.body)
                 .minimumScaleFactor(0.01)
                 .foregroundColor(.accentColor)
                 .allowsTightening(true)
                 .lineLimit(2)
+                .onTapGesture { viewStore.send(.set(\.$isSheetPresented, true))}
+                .sheet(isPresented: viewStore.binding(\.$isSheetPresented)) {
+                  WebView(
+                    url: URL(string: viewStore.userAccount.linkToAccount)!,
+                    type: .default
+                  )
+                }
 
               HStack {
                 Image(systemName: "info.circle")
@@ -71,7 +77,6 @@ struct UserView: View {
                 .font(.footnote)
             }
             .padding(.trailing)
-
 
             VStack(spacing: 5) {
               Image(systemName: "star.circle")
@@ -107,6 +112,7 @@ struct UserView: View {
 
           Spacer()
         }
+
         .onAppear { viewStore.send(.onAppear) }
         .blackTheme()
         .alert(self.store.scope(state: \.alert), dismiss: .dismissAlert)
@@ -114,6 +120,7 @@ struct UserView: View {
       .foregroundColor(Color.white)
       .navigationBarTitleDisplayMode(.large)
       .navigationTitle("User Account")
+
     }
   }
 }
@@ -124,7 +131,7 @@ struct UserView_Previews: PreviewProvider {
       UserView(store: .init(
         initialState: .init(userAccount: .mock),
         reducer: UserReducer()
-          .dependency(\.gitHubClient, .failValue)
+//          .dependency(\.gitHubClient, .failValue)
       ))
     }
   }

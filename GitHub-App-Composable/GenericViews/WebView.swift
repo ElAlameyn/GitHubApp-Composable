@@ -13,7 +13,7 @@ struct WebView: UIViewRepresentable {
   var url: URL
   var webView = WKWebView()
   var type: FunctionalType
-  var callBack: (String) -> Void
+  var callBack: (String) -> Void = { _ in }
 
   enum FunctionalType { case `default`, codeExtract }
 
