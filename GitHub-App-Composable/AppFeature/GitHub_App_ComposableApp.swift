@@ -13,19 +13,23 @@ struct GitHub_App_ComposableApp: App {
   var body: some Scene {
     WindowGroup {
       // MARK: -  UserView
-//
-//          NavigationView {
-//            UserView(store: .init(
-//              initialState: .init(),
-//              reducer: UserReducer()
-//            ))
-//          }
-//
-      // MARK: - Search View
 
-//          SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
+      //
+//      NavigationView {
+//        UserView(store: .init(
+//          initialState: .init(),
+//          reducer: UserReducer()
+//            .dependency(\.gitHubClient, .failValue)
+//        ))
+//      }
 
-      // MARK: - App View
+
+//                SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
+
+//                MeetView(store: StoreOf<AuthReducer>(
+//                  initialState: .init(),
+//                  reducer: AuthReducer())
+//
 
       AppView(store:
         .init(
@@ -34,12 +38,7 @@ struct GitHub_App_ComposableApp: App {
         )
       )
 
-      // MARK: - Meet View
 
-//          MeetView(store: StoreOf<AuthReducer>(
-//            initialState: .init(),
-//            reducer: AuthReducer())
-//          )
     }
   }
 }

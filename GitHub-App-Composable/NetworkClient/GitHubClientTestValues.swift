@@ -22,10 +22,10 @@ extension GitHubClient: TestDependencyKey where V == MoyaService {
     let endpointClosure = { (target: V) -> Endpoint in
       let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
       switch target {
-        case .authUserAccount, .authUserRepos, .searchRepo:
-          return .withStubResponse(target: target) {
-            .networkError(NSError(domain: "Error", code: 408))
-          }
+          case .authUserAccount, .authUserRepos, .searchRepo:
+            return .withStubResponse(target: target) {
+              .networkError(NSError(domain: "Error", code: 408))
+            }
         default: return defaultEndpoint
       }
     }
@@ -33,13 +33,11 @@ extension GitHubClient: TestDependencyKey where V == MoyaService {
     return GitHubClient<MoyaService>(provider: .init(
       endpointClosure: endpointClosure,
       stubClosure: MoyaProvider.immediatelyStub,
-      plugins: [AccessTokenPlugin.tokenPlugin]
+      plugins: [AccessTokenPlugin.tokenPlugin, NetworkLoggerPlugin.verbose]
     )
     )
   }
 }
-
-
 
 extension GitHubClient: DependencyKey where V == MoyaService {
   static var liveValue: GitHubClient<MoyaService> {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Tagged
 
 // MARK: - RepositoriesResponse
 
@@ -18,9 +19,11 @@ struct RepositoriesResponse: Codable, Equatable {
 // MARK: - Repository
 
 struct GithubRepository: Codable, Equatable {
-  let id: Int
+  let id: ID
   let name: String
   let size, stargazersCount, watchersCount: Int?
+
+  typealias ID = Tagged<Self, Int>
 }
 
 // MARK: - License

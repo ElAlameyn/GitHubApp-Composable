@@ -17,6 +17,9 @@
 		B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58153142A1D58CC00E34368 /* Moya+Extension.swift */; };
 		B581531D2A1F716200E34368 /* SearchFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581531C2A1F716200E34368 /* SearchFeatureTests.swift */; };
 		B581532C2A1F9DD200E34368 /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581532B2A1F9DD200E34368 /* RepoView.swift */; };
+		B5891BBC2A288FD800017BD5 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5891BBB2A288FD700017BD5 /* Cache.swift */; };
+		B5891BBF2A2893BD00017BD5 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = B5891BBE2A2893BD00017BD5 /* Tagged */; };
+		B5891BC22A289B9C00017BD5 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = B5891BC12A289B9C00017BD5 /* OrderedCollections */; };
 		B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */; };
 		B5A6E8492A21060400B08F79 /* UserStateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6E8482A21060400B08F79 /* UserStateModels.swift */; };
 		B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */; };
@@ -79,10 +82,11 @@
 		B581531A2A1F716200E34368 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B581531C2A1F716200E34368 /* SearchFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeatureTests.swift; sourceTree = "<group>"; };
 		B581532B2A1F9DD200E34368 /* RepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoView.swift; sourceTree = "<group>"; };
+		B5891BBB2A288FD700017BD5 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		B5A6E8482A21060400B08F79 /* UserStateModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateModels.swift; sourceTree = "<group>"; };
 		B5B6F1782997D282005727BB /* GitHub-App-Composable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GitHub-App-Composable.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_App_ComposableApp.swift; sourceTree = "<group>"; };
+		B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHub_App_ComposableApp.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B5B6F17F2997D283005727BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5B6F1822997D283005727BB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B5B6F18A2997D293005727BB /* TokenResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
@@ -116,8 +120,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5891BC22A289B9C00017BD5 /* OrderedCollections in Frameworks */,
 				B5BE5D46299D28DE00FF7CC9 /* KeychainStored in Frameworks */,
 				B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */,
+				B5891BBF2A2893BD00017BD5 /* Tagged in Frameworks */,
 				B5B6F1A82997D32D005727BB /* CombineMoya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,6 +178,14 @@
 			path = AppFeature;
 			sourceTree = "<group>";
 		};
+		B5891BBA2A288FA100017BD5 /* SavingClient */ = {
+			isa = PBXGroup;
+			children = (
+				B5891BBB2A288FD700017BD5 /* Cache.swift */,
+			);
+			path = SavingClient;
+			sourceTree = "<group>";
+		};
 		B5B6F16F2997D282005727BB = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +207,7 @@
 		B5B6F17A2997D282005727BB /* GitHub-App-Composable */ = {
 			isa = PBXGroup;
 			children = (
+				B5891BBA2A288FA100017BD5 /* SavingClient */,
 				B58153262A1F735A00E34368 /* AppFeature */,
 				B58153252A1F730D00E34368 /* UserFeature */,
 				B58153242A1F72B000E34368 /* AuthFeature */,
@@ -308,6 +323,8 @@
 				B5B6F1A72997D32D005727BB /* CombineMoya */,
 				B5B6F1AA2997D353005727BB /* ComposableArchitecture */,
 				B5BE5D45299D28DE00FF7CC9 /* KeychainStored */,
+				B5891BBE2A2893BD00017BD5 /* Tagged */,
+				B5891BC12A289B9C00017BD5 /* OrderedCollections */,
 			);
 			productName = "GitHub-App-Composable";
 			productReference = B5B6F1782997D282005727BB /* GitHub-App-Composable.app */;
@@ -345,6 +362,8 @@
 				B5B6F1A62997D32D005727BB /* XCRemoteSwiftPackageReference "Moya" */,
 				B5B6F1A92997D353005727BB /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				B5BE5D44299D28DE00FF7CC9 /* XCRemoteSwiftPackageReference "KeychainStored" */,
+				B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */,
+				B5891BC02A289B9C00017BD5 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = B5B6F1792997D282005727BB /* Products */;
 			projectDirPath = "";
@@ -392,6 +411,7 @@
 				B50C647D29C095E400DF5AB3 /* UserResponse.swift in Sources */,
 				B562C2F429A7992000559233 /* ExpirationTokenModel.swift in Sources */,
 				B5A6E8492A21060400B08F79 /* UserStateModels.swift in Sources */,
+				B5891BBC2A288FD800017BD5 /* Cache.swift in Sources */,
 				B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */,
 				B5B6F1A32997D2AF005727BB /* SearchView.swift in Sources */,
 				B5BE5D4C299EA6B600FF7CC9 /* RepositoriesResponse.swift in Sources */,
@@ -525,6 +545,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -676,6 +697,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-tagged";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+		B5891BC02A289B9C00017BD5 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		B5B6F1A62997D32D005727BB /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya";
@@ -703,6 +740,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B5891BBE2A2893BD00017BD5 /* Tagged */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */;
+			productName = Tagged;
+		};
+		B5891BC12A289B9C00017BD5 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5891BC02A289B9C00017BD5 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		B5B6F1A72997D32D005727BB /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B5B6F1A62997D32D005727BB /* XCRemoteSwiftPackageReference "Moya" */;

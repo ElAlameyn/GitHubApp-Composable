@@ -13,10 +13,13 @@ import KeychainStored
 import Moya
 
 struct GitHubClient<V: TargetType> {
-  var provider = MoyaProvider<V>(plugins: [AccessTokenPlugin { _ in
-    @KeychainStored(service: "app-auth-token") var token: String?
-    return token ?? ""
-  }])
+  var provider = MoyaProvider<V>(plugins: [
+    AccessTokenPlugin { _ in
+      @KeychainStored(service: "app-auth-token") var token: String?
+      return token ?? ""
+    },
+    NetworkLoggerPlugin.verbose
+  ])
 
   func request<T: Decodable>(_ target: V, of type: T.Type) async -> AnyPublisher<T, Error> {
     provider.requestPublisher(target)
@@ -27,7 +30,6 @@ struct GitHubClient<V: TargetType> {
       .eraseToAnyPublisher()
   }
 }
-
 
 extension JSONDecoder {
   static let snakeJsonDecoder: JSONDecoder = {
