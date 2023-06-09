@@ -10,6 +10,9 @@ import SwiftUI
 
 @main
 struct GitHub_App_ComposableApp: App {
+
+  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
   var body: some Scene {
     WindowGroup {
       // MARK: -  UserView
@@ -26,10 +29,10 @@ struct GitHub_App_ComposableApp: App {
 
 //                SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
 
-//                MeetView(store: StoreOf<AuthReducer>(
+//                AuthView(store: StoreOf<AuthReducer>(
 //                  initialState: .init(),
-//                  reducer: AuthReducer())
-//
+//                  reducer: AuthReducer()))
+
 
       AppView(store:
         .init(
@@ -37,7 +40,6 @@ struct GitHub_App_ComposableApp: App {
           reducer: AppReducer()
         )
       )
-
 
     }
   }

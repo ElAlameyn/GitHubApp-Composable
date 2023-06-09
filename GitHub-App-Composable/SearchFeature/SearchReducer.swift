@@ -69,8 +69,7 @@ struct SearchReducer: ReducerProtocol {
         case .binding: return .none
 
         case .onAppear: break
-//          gitHubClient.setToken("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")
-
+          
         case .searchResponse(.success(let response)):
           state.isEmptySearchResponse = response.items.isEmpty
 
@@ -80,12 +79,11 @@ struct SearchReducer: ReducerProtocol {
               stargazersCount: $0.stargazersCount ?? 0
             )
           }
-
-          return .send(.set(\.$isSearching, false))
+          return .none
         case .searchResponse(.failure(let error)):
           print("Error: \(error.localizedDescription)")
           state.repositories = []
-          return .send(.set(\.$isSearching, false))
+          return .none
       }
       return .none
     }

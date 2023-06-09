@@ -5,8 +5,8 @@
 //  Created by Артем Калинкин on 17.12.2022.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 import KeychainStored
 
 struct AppReducer: ReducerProtocol {
@@ -44,6 +44,7 @@ struct AppReducer: ReducerProtocol {
           exit(0)
         case let .authorization(.authorizedWith(tokenResponse)):
           saveTokenInfo(tokenResponse, state: &state)
+          state.authState = nil
 
         case .authorization(.isWebViewDismissed):
           if let authState = state.authState, authState.isAuthorized {
@@ -54,7 +55,7 @@ struct AppReducer: ReducerProtocol {
           checkTokenExpiration(state: &state)
 
         case .authorization(_), .searchAction: break
-        case .userAction(_): break
+        case .userAction: break
       }
       return .none
     }
@@ -76,6 +77,4 @@ struct AppReducer: ReducerProtocol {
       state.tokenModel = .init(response: tokenResponse, savedDate: Date())
     }
   }
-
 }
-

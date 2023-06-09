@@ -9,6 +9,8 @@ import Combine
 import ComposableArchitecture
 import Foundation
 import Moya
+import OAuthSwift
+import UIKit
 
 struct AuthReducer: ReducerProtocol {
   struct State: Equatable {
@@ -25,7 +27,7 @@ struct AuthReducer: ReducerProtocol {
   enum Action {
     case submitAuthButtonTapped
     case authorizedWith(tokenResponse: TokenResponse?)
-    case tokenRequest(code: String, creds: State.Credentials)
+    case authorize
     case tokenResponse(TaskResult<TokenResponse>)
     case isWebViewDismissed
   }
@@ -37,20 +39,10 @@ struct AuthReducer: ReducerProtocol {
       case .submitAuthButtonTapped:
         state.isWebViewPresented = state.isAuthorized ? false : true
       case .authorizedWith: break
-      case let .tokenRequest(code: code, creds: creds):
-
+      case .authorize:
         return .task {
           await .tokenResponse(TaskResult {
-            await gitHubClient
-              .request(
-                .tokenWith(
-                  code: code,
-                  clientId: creds.clientId,
-                  clientSecret: creds.clientSecret
-                ),
-                of: TokenResponse.self
-              )
-              .values
+            try await gitHubClient.authorize()
           })
         }
 
@@ -62,7 +54,7 @@ struct AuthReducer: ReducerProtocol {
         state.isWebViewPresented = false
         return .send(.authorizedWith(tokenResponse: response))
 
-      case .tokenResponse(.failure(let error)):
+      case let .tokenResponse(.failure(error)):
         state.isAuthorized = false
         state.isWebViewPresented = false
         print(error.localizedDescription)

@@ -17,6 +17,8 @@
 		B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58153142A1D58CC00E34368 /* Moya+Extension.swift */; };
 		B581531D2A1F716200E34368 /* SearchFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581531C2A1F716200E34368 /* SearchFeatureTests.swift */; };
 		B581532C2A1F9DD200E34368 /* RepoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581532B2A1F9DD200E34368 /* RepoView.swift */; };
+		B58696872A2DCCAD00D713AF /* OAuthSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B58696862A2DCCAD00D713AF /* OAuthSwift */; };
+		B58696892A2DCCE500D713AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58696882A2DCCE500D713AF /* AppDelegate.swift */; };
 		B5891BBC2A288FD800017BD5 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5891BBB2A288FD700017BD5 /* Cache.swift */; };
 		B5891BBF2A2893BD00017BD5 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = B5891BBE2A2893BD00017BD5 /* Tagged */; };
 		B5891BC22A289B9C00017BD5 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = B5891BC12A289B9C00017BD5 /* OrderedCollections */; };
@@ -82,6 +84,8 @@
 		B581531A2A1F716200E34368 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B581531C2A1F716200E34368 /* SearchFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFeatureTests.swift; sourceTree = "<group>"; };
 		B581532B2A1F9DD200E34368 /* RepoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoView.swift; sourceTree = "<group>"; };
+		B58696882A2DCCE500D713AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B586968A2A2DCDB000D713AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B5891BBB2A288FD700017BD5 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		B58CCBC9299F91A500B4BAED /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		B5A6E8482A21060400B08F79 /* UserStateModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStateModels.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 			files = (
 				B5891BC22A289B9C00017BD5 /* OrderedCollections in Frameworks */,
 				B5BE5D46299D28DE00FF7CC9 /* KeychainStored in Frameworks */,
+				B58696872A2DCCAD00D713AF /* OAuthSwift in Frameworks */,
 				B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */,
 				B5891BBF2A2893BD00017BD5 /* Tagged in Frameworks */,
 				B5B6F1A82997D32D005727BB /* CombineMoya in Frameworks */,
@@ -174,6 +179,7 @@
 				B5B6F17B2997D282005727BB /* GitHub_App_ComposableApp.swift */,
 				B531716E2998F40500BE5482 /* AppView.swift */,
 				B5B6F19B2997D2A9005727BB /* AppReducer.swift */,
+				B58696882A2DCCE500D713AF /* AppDelegate.swift */,
 			);
 			path = AppFeature;
 			sourceTree = "<group>";
@@ -207,6 +213,7 @@
 		B5B6F17A2997D282005727BB /* GitHub-App-Composable */ = {
 			isa = PBXGroup;
 			children = (
+				B586968A2A2DCDB000D713AF /* Info.plist */,
 				B5891BBA2A288FA100017BD5 /* SavingClient */,
 				B58153262A1F735A00E34368 /* AppFeature */,
 				B58153252A1F730D00E34368 /* UserFeature */,
@@ -325,6 +332,7 @@
 				B5BE5D45299D28DE00FF7CC9 /* KeychainStored */,
 				B5891BBE2A2893BD00017BD5 /* Tagged */,
 				B5891BC12A289B9C00017BD5 /* OrderedCollections */,
+				B58696862A2DCCAD00D713AF /* OAuthSwift */,
 			);
 			productName = "GitHub-App-Composable";
 			productReference = B5B6F1782997D282005727BB /* GitHub-App-Composable.app */;
@@ -364,6 +372,7 @@
 				B5BE5D44299D28DE00FF7CC9 /* XCRemoteSwiftPackageReference "KeychainStored" */,
 				B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 				B5891BC02A289B9C00017BD5 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */,
 			);
 			productRefGroup = B5B6F1792997D282005727BB /* Products */;
 			projectDirPath = "";
@@ -429,6 +438,7 @@
 				B5BE5D48299D2B6A00FF7CC9 /* KeychaingStored+Extension.swift in Sources */,
 				B58CCBCA299F91A500B4BAED /* Binding+Extension.swift in Sources */,
 				B5B6F1A52997D2AF005727BB /* WebView.swift in Sources */,
+				B58696892A2DCCE500D713AF /* AppDelegate.swift in Sources */,
 				B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */,
 				B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */,
 				B5FDD70629AA8E4F0085763E /* UserReducer.swift in Sources */,
@@ -615,6 +625,7 @@
 				DEVELOPMENT_TEAM = 585BX3KVC6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GitHub-App-Composable/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -645,6 +656,7 @@
 				DEVELOPMENT_TEAM = 585BX3KVC6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "GitHub-App-Composable/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -697,6 +709,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-tagged";
@@ -740,6 +760,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B58696862A2DCCAD00D713AF /* OAuthSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */;
+			productName = OAuthSwift;
+		};
 		B5891BBE2A2893BD00017BD5 /* Tagged */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */;

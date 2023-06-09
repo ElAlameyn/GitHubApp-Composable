@@ -42,7 +42,7 @@ struct UserView: View {
                 .foregroundColor(.accentColor)
                 .allowsTightening(true)
                 .lineLimit(2)
-                .onTapGesture { viewStore.send(.set(\.$isSheetPresented, true))}
+                .onTapGesture { viewStore.send(.set(\.$isSheetPresented, true)) }
                 .sheet(isPresented: viewStore.binding(\.$isSheetPresented)) {
                   WebView(
                     url: URL(string: viewStore.userAccount.linkToAccount)!,
@@ -120,7 +120,6 @@ struct UserView: View {
       .foregroundColor(Color.white)
       .navigationBarTitleDisplayMode(.large)
       .navigationTitle("User Account")
-
     }
   }
 }

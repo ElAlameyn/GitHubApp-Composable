@@ -41,7 +41,7 @@ struct UserReducer: ReducerProtocol {
       switch action {
         case .onAppear:
 
-          guard tryLoadCachedReposFrom(&state) else { return .none }
+          guard !tryLoadCachedReposFrom(&state) else { return .none }
 
           return .run { send in
             await withTaskGroup(of: Void.self, body: { group in
