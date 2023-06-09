@@ -19,4 +19,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     OAuthSwift.handle(url: url)
     return true
   }
+
+  class var sharedInstance: AppDelegate {
+    return UIApplication.shared.delegate as! AppDelegate
+  }
 }

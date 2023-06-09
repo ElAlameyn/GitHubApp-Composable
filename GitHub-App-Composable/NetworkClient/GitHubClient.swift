@@ -23,14 +23,6 @@ struct GitHubClient<V: TargetType> {
     NetworkLoggerPlugin.verbose
   ])
 
-  var oauth: OAuth2Swift = .init(
-    consumerKey: "Iv1.7c01457eab0c5039",
-    consumerSecret: "79cda2e631bdeef3ed76c1f663dd61dc8325b25b",
-    authorizeUrl: "https://github.com/login/oauth/authorize",
-    accessTokenUrl: "https://github.com/login/oauth/access_token",
-    responseType: "code"
-  )
-
   func request<T: Decodable>(_ target: V, of type: T.Type) async -> AnyPublisher<T, Error> {
     provider.requestPublisher(target)
       .receive(on: DispatchQueue.main)

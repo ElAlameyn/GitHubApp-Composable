@@ -23,7 +23,6 @@ struct AuthReducer: ReducerProtocol {
     case submitAuthButtonTapped
     case authorizedWith(tokenResponse: TokenResponse?)
     case authorize
-    case preloadSecrets(tag: String)
     case onSuccessPreload(_ creds: SaveClient.Credentials)
     case tokenResponse(TaskResult<TokenResponse>)
     case isWebViewDismissed
@@ -37,12 +36,6 @@ struct AuthReducer: ReducerProtocol {
       case .submitAuthButtonTapped:
         state.isWebViewPresented = state.isAuthorized ? false : true
       case .authorizedWith: break
-      case .authorize:
-        return .task {
-          await .tokenResponse(TaskResult {
-            try await gitHubClient.authorize(oauth: .init(parameters: .init())!)
-          })
-        }
 
       case .isWebViewDismissed:
         state.isWebViewPresented = false
@@ -56,8 +49,7 @@ struct AuthReducer: ReducerProtocol {
         state.isAuthorized = false
         state.isWebViewPresented = false
         print(error.localizedDescription)
-      case .preloadSecrets:
-        
+      case .authorize:
         return .run { send in
           let value = await saveClient.preloadSecrets(tag: "BlobTag")
           if let value = value { await send(.onSuccessPreload(value)) }
@@ -71,6 +63,8 @@ struct AuthReducer: ReducerProtocol {
           accessTokenUrl: "https://github.com/login/oauth/access_token",
           responseType: "code"
         )
+
+        state.oauth.authorizeURLHandler = OauthViewContoller()
 
         return .task { [oauth = state.oauth!] in
           await .tokenResponse(TaskResult {

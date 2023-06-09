@@ -7,6 +7,8 @@
 
 import ComposableArchitecture
 import UIKit
+import Logging
+
 
 extension NSBundleResourceRequest: @unchecked Sendable {}
 
@@ -18,6 +20,8 @@ extension DependencyValues {
 }
 
 struct SaveClient {
+  private var logger = Logger(label: "Save.Client 💽")
+
   struct Credentials: Equatable, Decodable {
     var clientId = ""
     var clientSecret = ""
@@ -28,14 +32,14 @@ struct SaveClient {
     return try? await withCheckedThrowingContinuation { send in
       request.conditionallyBeginAccessingResources { isAvailable in
         if isAvailable {
-          print("Available")
+          logger.info("Available")
           send.resume(returning: self.decodeCreds())
         } else {
           request.beginAccessingResources { error in
             if let error {
               send.resume(throwing: error)
             } else {
-              print("Downloaded")
+              logger.info("Donwloaded")
               send.resume(returning: self.decodeCreds())
             }
           }
@@ -47,10 +51,6 @@ struct SaveClient {
   private func decodeCreds() -> Credentials {
     let data = NSDataAsset(name: "Secrets.json")!
     let decoded = try! JSONDecoder().decode(Credentials.self, from: data.data)
-
-    print("Client id: \(decoded.clientId)")
-    print("Client secret: \(decoded.clientSecret)")
-
     return decoded
   }
 }

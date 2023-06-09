@@ -49,7 +49,7 @@ struct AuthView: View {
             Spacer()
 
             Button {
-              viewStore.send(.preloadSecrets(tag: "BlobTag"))
+              viewStore.send(.authorize)
             } label: {
               Text("Get Started")
                 .frame(minWidth: 200, minHeight: 40)
@@ -76,28 +76,6 @@ struct AuthView: View {
         .foregroundColor(.white)
       }
       .blackTheme()
-//      .sheet(isPresented: viewStore.binding(
-//        get: \.isWebViewPresented,
-//        send: .isWebViewDismissed)
-//      ) {
-//        WebView(
-//          url: GitHubClient.getOauthURL(clientId: viewStore.creds.clientId),
-//          type: .codeExtract
-//        ) { code in viewStore.send(
-//          .tokenRequest(
-//            code: code,
-//            creds: viewStore.creds
-//          ))
-//        }
-//        .onDisappear {
-//          if viewStore.isAuthorized { dismiss() }
-//        }
-//      }
-      .onOpenURL { url in
-        DispatchQueue.main.async {
-          OAuthSwift.handle(url: url)
-        }
-      }
     }
   }
 }

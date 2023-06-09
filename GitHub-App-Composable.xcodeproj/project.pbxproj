@@ -12,6 +12,8 @@
 		B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515030429A3D91200D87787 /* ActivityIndicator.swift */; };
 		B531716F2998F40500BE5482 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531716E2998F40500BE5482 /* AppView.swift */; };
 		B532DB262A33384A006B604C /* SaveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532DB252A33384A006B604C /* SaveClient.swift */; };
+		B532DB282A3343BB006B604C /* OauthViewConroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532DB272A3343BB006B604C /* OauthViewConroller.swift */; };
+		B532DB2B2A334B6A006B604C /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = B532DB2A2A334B6A006B604C /* Logging */; };
 		B562C2F429A7992000559233 /* ExpirationTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F329A7992000559233 /* ExpirationTokenModel.swift */; };
 		B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F529A7A73300559233 /* TaskResult+Extension.swift */; };
 		B56CA1DE2A14F6B300131219 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */; };
@@ -79,6 +81,7 @@
 		B515030429A3D91200D87787 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		B531716E2998F40500BE5482 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		B532DB252A33384A006B604C /* SaveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveClient.swift; sourceTree = "<group>"; };
+		B532DB272A3343BB006B604C /* OauthViewConroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OauthViewConroller.swift; sourceTree = "<group>"; };
 		B562C2F329A7992000559233 /* ExpirationTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationTokenModel.swift; sourceTree = "<group>"; };
 		B562C2F529A7A73300559233 /* TaskResult+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskResult+Extension.swift"; sourceTree = "<group>"; };
 		B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
@@ -128,6 +131,7 @@
 			files = (
 				B5891BC22A289B9C00017BD5 /* OrderedCollections in Frameworks */,
 				B5BE5D46299D28DE00FF7CC9 /* KeychainStored in Frameworks */,
+				B532DB2B2A334B6A006B604C /* Logging in Frameworks */,
 				B58696872A2DCCAD00D713AF /* OAuthSwift in Frameworks */,
 				B5B6F1AB2997D353005727BB /* ComposableArchitecture in Frameworks */,
 				B5891BBF2A2893BD00017BD5 /* Tagged in Frameworks */,
@@ -286,6 +290,7 @@
 			children = (
 				B5B6F1A22997D2AF005727BB /* WebView.swift */,
 				B515030429A3D91200D87787 /* ActivityIndicator.swift */,
+				B532DB272A3343BB006B604C /* OauthViewConroller.swift */,
 			);
 			path = GenericViews;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 				B5891BBE2A2893BD00017BD5 /* Tagged */,
 				B5891BC12A289B9C00017BD5 /* OrderedCollections */,
 				B58696862A2DCCAD00D713AF /* OAuthSwift */,
+				B532DB2A2A334B6A006B604C /* Logging */,
 			);
 			productName = "GitHub-App-Composable";
 			productReference = B5B6F1782997D282005727BB /* GitHub-App-Composable.app */;
@@ -387,6 +393,7 @@
 				B5891BBD2A2893BD00017BD5 /* XCRemoteSwiftPackageReference "swift-tagged" */,
 				B5891BC02A289B9C00017BD5 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */,
+				B532DB292A334B6A006B604C /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = B5B6F1792997D282005727BB /* Products */;
 			projectDirPath = "";
@@ -433,6 +440,7 @@
 				B5B6F18B2997D293005727BB /* TokenResponse.swift in Sources */,
 				B50C647D29C095E400DF5AB3 /* UserResponse.swift in Sources */,
 				B562C2F429A7992000559233 /* ExpirationTokenModel.swift in Sources */,
+				B532DB282A3343BB006B604C /* OauthViewConroller.swift in Sources */,
 				B5A6E8492A21060400B08F79 /* UserStateModels.swift in Sources */,
 				B5891BBC2A288FD800017BD5 /* Cache.swift in Sources */,
 				B5B6F17C2997D282005727BB /* GitHub_App_ComposableApp.swift in Sources */,
@@ -724,6 +732,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B532DB292A334B6A006B604C /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/OAuthSwift/OAuthSwift";
@@ -775,6 +791,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B532DB2A2A334B6A006B604C /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B532DB292A334B6A006B604C /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
 		B58696862A2DCCAD00D713AF /* OAuthSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B58696852A2DCCAD00D713AF /* XCRemoteSwiftPackageReference "OAuthSwift" */;

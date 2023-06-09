@@ -40,7 +40,6 @@ struct AppReducer: ReducerProtocol {
     Reduce { state, action in
       switch action {
         case .quitApp:
-          Logger.debug("Quit Action")
           exit(0)
         case let .authorization(.authorizedWith(tokenResponse)):
           saveTokenInfo(tokenResponse, state: &state)
@@ -52,7 +51,8 @@ struct AppReducer: ReducerProtocol {
           }
 
         case .checkIfTokenExpired:
-          checkTokenExpiration(state: &state)
+          state.authState = .init()
+//          checkTokenExpiration(state: &state)
 
         case .authorization(_), .searchAction: break
         case .userAction: break
