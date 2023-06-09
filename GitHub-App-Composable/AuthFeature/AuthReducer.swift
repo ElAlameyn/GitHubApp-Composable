@@ -14,25 +14,23 @@ import UIKit
 
 struct AuthReducer: ReducerProtocol {
   struct State: Equatable {
-    struct Credentials: Equatable {
-      var clientId = "Iv1.7c01457eab0c5039"
-      var clientSecret = "79cda2e631bdeef3ed76c1f663dd61dc8325b25b"
-    }
-
     @BindingState var isAuthorized: Bool = false
     var isWebViewPresented: Bool = false
-    var creds: Credentials = .init()
+    var oauth: OAuth2Swift!
   }
 
   enum Action {
     case submitAuthButtonTapped
     case authorizedWith(tokenResponse: TokenResponse?)
     case authorize
+    case preloadSecrets(tag: String)
+    case onSuccessPreload(_ creds: SaveClient.Credentials)
     case tokenResponse(TaskResult<TokenResponse>)
     case isWebViewDismissed
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
+  @Dependency(\.saveClient) var saveClient
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
     switch action {
@@ -42,7 +40,7 @@ struct AuthReducer: ReducerProtocol {
       case .authorize:
         return .task {
           await .tokenResponse(TaskResult {
-            try await gitHubClient.authorize()
+            try await gitHubClient.authorize(oauth: .init(parameters: .init())!)
           })
         }
 
@@ -58,6 +56,27 @@ struct AuthReducer: ReducerProtocol {
         state.isAuthorized = false
         state.isWebViewPresented = false
         print(error.localizedDescription)
+      case .preloadSecrets:
+        
+        return .run { send in
+          let value = await saveClient.preloadSecrets(tag: "BlobTag")
+          if let value = value { await send(.onSuccessPreload(value)) }
+        }
+
+      case let .onSuccessPreload(creds):
+        state.oauth = .init(
+          consumerKey: creds.clientId,
+          consumerSecret: creds.clientSecret,
+          authorizeUrl: "https://github.com/login/oauth/authorize",
+          accessTokenUrl: "https://github.com/login/oauth/access_token",
+          responseType: "code"
+        )
+
+        return .task { [oauth = state.oauth!] in
+          await .tokenResponse(TaskResult {
+            try await gitHubClient.authorize(oauth: oauth)
+          })
+        }
     }
     return .none
   }

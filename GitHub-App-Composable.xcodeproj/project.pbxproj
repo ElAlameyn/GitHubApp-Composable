@@ -11,6 +11,7 @@
 		B515030329A3D5B900D87787 /* AsyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515030229A3D5B900D87787 /* AsyncManager.swift */; };
 		B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515030429A3D91200D87787 /* ActivityIndicator.swift */; };
 		B531716F2998F40500BE5482 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B531716E2998F40500BE5482 /* AppView.swift */; };
+		B532DB262A33384A006B604C /* SaveClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532DB252A33384A006B604C /* SaveClient.swift */; };
 		B562C2F429A7992000559233 /* ExpirationTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F329A7992000559233 /* ExpirationTokenModel.swift */; };
 		B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B562C2F529A7A73300559233 /* TaskResult+Extension.swift */; };
 		B56CA1DE2A14F6B300131219 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */; };
@@ -77,6 +78,7 @@
 		B515030229A3D5B900D87787 /* AsyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncManager.swift; sourceTree = "<group>"; };
 		B515030429A3D91200D87787 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		B531716E2998F40500BE5482 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		B532DB252A33384A006B604C /* SaveClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveClient.swift; sourceTree = "<group>"; };
 		B562C2F329A7992000559233 /* ExpirationTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirationTokenModel.swift; sourceTree = "<group>"; };
 		B562C2F529A7A73300559233 /* TaskResult+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TaskResult+Extension.swift"; sourceTree = "<group>"; };
 		B56CA1DD2A14F6B300131219 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
@@ -136,6 +138,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B532DB242A33383B006B604C /* SaveClient */ = {
+			isa = PBXGroup;
+			children = (
+				B532DB252A33384A006B604C /* SaveClient.swift */,
+			);
+			path = SaveClient;
+			sourceTree = "<group>";
+		};
 		B581531B2A1F716200E34368 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +223,7 @@
 		B5B6F17A2997D282005727BB /* GitHub-App-Composable */ = {
 			isa = PBXGroup;
 			children = (
+				B532DB242A33383B006B604C /* SaveClient */,
 				B586968A2A2DCDB000D713AF /* Info.plist */,
 				B5891BBA2A288FA100017BD5 /* SavingClient */,
 				B58153262A1F735A00E34368 /* AppFeature */,
@@ -345,6 +356,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					BlobTag,
+				);
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
@@ -441,6 +455,7 @@
 				B58696892A2DCCE500D713AF /* AppDelegate.swift in Sources */,
 				B562C2F629A7A73300559233 /* TaskResult+Extension.swift in Sources */,
 				B58153152A1D58CC00E34368 /* Moya+Extension.swift in Sources */,
+				B532DB262A33384A006B604C /* SaveClient.swift in Sources */,
 				B5FDD70629AA8E4F0085763E /* UserReducer.swift in Sources */,
 				B5FDD70429AA8E380085763E /* UserView.swift in Sources */,
 				B515030529A3D91200D87787 /* ActivityIndicator.swift in Sources */,

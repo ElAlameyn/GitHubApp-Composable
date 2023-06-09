@@ -40,7 +40,7 @@ struct GitHubClient<V: TargetType> {
       .eraseToAnyPublisher()
   }
 
-  func authorize() async throws -> TokenResponse {
+  func authorize(oauth: OAuth2Swift) async throws -> TokenResponse {
     try await withCheckedThrowingContinuation { continuation in
       let stateOauth = generateState(withLength: 20)
       oauth.authorize(

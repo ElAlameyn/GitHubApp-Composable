@@ -49,7 +49,7 @@ struct AuthView: View {
             Spacer()
 
             Button {
-              viewStore.send(.authorize)
+              viewStore.send(.preloadSecrets(tag: "BlobTag"))
             } label: {
               Text("Get Started")
                 .frame(minWidth: 200, minHeight: 40)

@@ -1,0 +1,18 @@
+{
+  "data" : [
+    {
+      "filename" : "json.json",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.json"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "on-demand-resource-tags" : [
+      "BlobTag"
+    ]
+  }
+}
