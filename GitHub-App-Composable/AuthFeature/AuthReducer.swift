@@ -20,12 +20,10 @@ struct AuthReducer: ReducerProtocol {
   }
 
   enum Action {
-    case submitAuthButtonTapped
-    case authorizedWith(tokenResponse: TokenResponse?)
     case authorize
+    case authorizedWith(tokenResponse: TokenResponse?)
     case onSuccessPreload(_ creds: SaveClient.Credentials)
     case tokenResponse(TaskResult<TokenResponse>)
-    case isWebViewDismissed
   }
 
   @Dependency(\.gitHubClient) var gitHubClient
@@ -33,25 +31,19 @@ struct AuthReducer: ReducerProtocol {
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
     switch action {
-      case .submitAuthButtonTapped:
-        state.isWebViewPresented = state.isAuthorized ? false : true
       case .authorizedWith: break
-
-      case .isWebViewDismissed:
-        state.isWebViewPresented = false
 
       case let .tokenResponse(.success(response)):
         state.isAuthorized = true
-        state.isWebViewPresented = false
         return .send(.authorizedWith(tokenResponse: response))
 
       case let .tokenResponse(.failure(error)):
         state.isAuthorized = false
-        state.isWebViewPresented = false
+        // TODO: Add error handling
         print(error.localizedDescription)
       case .authorize:
         return .run { send in
-          let value = await saveClient.preloadSecrets(tag: "BlobTag")
+          let value = await saveClient.preloadSecrets("BlobTag")
           if let value = value { await send(.onSuccessPreload(value)) }
         }
 

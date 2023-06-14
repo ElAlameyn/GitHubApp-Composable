@@ -7,6 +7,8 @@
 
 import Foundation
 
+//TODO: Make @PropetyWrapper
+
 // MARK: - Equatable
 
 extension Cache: Equatable {

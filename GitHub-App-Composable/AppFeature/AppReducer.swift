@@ -45,11 +45,6 @@ struct AppReducer: ReducerProtocol {
           saveTokenInfo(tokenResponse, state: &state)
           state.authState = nil
 
-        case .authorization(.isWebViewDismissed):
-          if let authState = state.authState, authState.isAuthorized {
-            state.authState = nil
-          }
-
         case .checkIfTokenExpired:
           state.authState = .init()
 //          checkTokenExpiration(state: &state)
