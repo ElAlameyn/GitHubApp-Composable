@@ -5,18 +5,17 @@
 //  Created by Артем Калинкин on 11.02.2023.
 //
 
-import Moya
 import Foundation
-
+import Moya
 
 enum MoyaService {
   case tokenWith(code: String, clientId: String, clientSecret: String)
+  case authUserAccount
   case searchRepo(q: String)
+  case authUserRepos
 }
 
-
 extension MoyaService: TargetType {
-
   var baseURL: URL {
     switch self {
       case .tokenWith: return URL(string: "https://github.com/login/oauth")!
@@ -28,32 +27,36 @@ extension MoyaService: TargetType {
     switch self {
       case .tokenWith: return "/access_token"
       case .searchRepo: return "/search/repositories"
+      case .authUserAccount: return "/user"
+      case .authUserRepos: return "/user/repos"
     }
   }
+
   var method: Moya.Method {
     switch self {
       case .tokenWith: return .post
-      case .searchRepo: return .get
+      case .searchRepo, .authUserAccount, .authUserRepos: return .get
     }
   }
-
 
   var task: Task {
     switch self {
-      case let .tokenWith(code: code, clientId: clientId, clientSecret: clientSecret):
+      case .tokenWith(code: let code, clientId: let clientId, clientSecret: let clientSecret):
         return .requestParameters(parameters: [
           "client_id": clientId,
-          "client_secret" : clientSecret,
+          "client_secret": clientSecret,
           "code": code
         ], encoding: URLEncoding.default)
       case .searchRepo(q: let q):
-        return .requestParameters(parameters: ["q":q], encoding: URLEncoding.default)
+        return .requestParameters(parameters: ["q": q], encoding: URLEncoding.default)
+      case .authUserAccount, .authUserRepos: return .requestPlain
     }
   }
 
-  var headers: [String : String]? {
+  var headers: [String: String]? {
     return ["Accept": "application/vnd.github+json"]
   }
+
 }
 
 extension MoyaService: AccessTokenAuthorizable {
@@ -64,4 +67,3 @@ extension MoyaService: AccessTokenAuthorizable {
     }
   }
 }
-

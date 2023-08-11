@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Combine
 import Moya
+import Foundation
 
 extension TaskResult {
   public init(catching body: @Sendable () async throws -> AsyncThrowingPublisher<AnyPublisher<Success, Error>>) async {
@@ -16,5 +17,12 @@ extension TaskResult {
     } catch {
       self = .failure(error)
     }
+  }
+}
+
+
+extension TaskResult {
+  static var error: Self {
+    Self.failure(MoyaError.underlying(NSError.default, nil))
   }
 }

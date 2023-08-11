@@ -24,7 +24,7 @@ struct AsyncManager {
 
   static func extractValues<T>( _ value: AsyncThrowingPublisher<AnyPublisher<T, Error>>) async throws -> T {
     try await withCheckedThrowingContinuation { next in
-      async {
+      _Concurrency.Task {
         do {
           for try await responseResult in value {
             print("Achieved values: \(responseResult)")

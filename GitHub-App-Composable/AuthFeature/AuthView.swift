@@ -5,12 +5,13 @@
 //  Created by Артем Калинкин on 15.12.2022.
 //
 
-import SwiftUI
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
+import OAuthSwift
+import SwiftUI
 
 struct AuthView: View {
-  @State private var isLinkActive = false
+//  @State private var isLinkActive = false
   @Environment(\.dismiss) var dismiss
   let store: StoreOf<AuthReducer>
 
@@ -48,7 +49,7 @@ struct AuthView: View {
             Spacer()
 
             Button {
-              viewStore.send(.submitAuthButtonTapped)
+              viewStore.send(.authorize)
             } label: {
               Text("Get Started")
                 .frame(minWidth: 200, minHeight: 40)
@@ -73,29 +74,11 @@ struct AuthView: View {
         }
         .multilineTextAlignment(.center)
         .foregroundColor(.white)
-
       }
-      .background(Color.black.opacity(0.8))
-      .sheet(isPresented: viewStore.binding(
-        get: \.isWebViewPresented,
-        send: .isWebViewDismissed)
-      ) {
-        WebView(
-          url: GitHubClient.getOauthURL(clientId: viewStore.creds.clientId)
-        ) { code in viewStore.send(
-          .tokenRequest(
-            code: code,
-            creds: viewStore.creds
-          ))
-        }
-        .onDisappear {
-          if viewStore.isAuthorized { dismiss() }
-        }
-      }
+      .blackTheme()
     }
   }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
@@ -106,8 +89,3 @@ struct ContentView_Previews: PreviewProvider {
     )
   }
 }
-
-
-
-
-

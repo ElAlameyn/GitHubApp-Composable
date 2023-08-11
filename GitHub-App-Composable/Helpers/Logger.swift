@@ -6,19 +6,12 @@
 //
 
 import ComposableArchitecture
-import Moya
 import Foundation
+import Logging
+import Moya
 
-struct Logger {
-  static func log<Root: ReducerProtocol, Value>(
-    label: String = "Debug Print",
-    viewStore: ViewStoreOf<Root>,
-    kp: KeyPath<Root.State, Value>
-  )  {
-    print((label) + "\(viewStore.state[keyPath: kp])")
-  }
-
-  static func log(response: Response)  {
+extension Logger {
+  static func log(response: Response) {
     print("=============🔥 RESPONSE 🔥===============")
     let json = try? JSONSerialization.jsonObject(with: response.data, options: .fragmentsAllowed)
     print(json ?? "Not serialized")
@@ -26,9 +19,46 @@ struct Logger {
     print("=============🔥==========🔥===============")
   }
 
-  static func debug(_ label: String)  {
-    print("DEBUG: \(label)")
+  static func log(data: Data, statusCode: Int) {
+    print("=============🔥 RESPONSE 🔥===============")
+    let json = try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+    print(json ?? "Not serialized")
+    print("Status code: \(statusCode)")
+    print("=============🔥==========🔥===============")
+  }
+
+  @inlinable
+  public func error(
+    _ message: @autoclosure () -> Logger.Message,
+    file: String = #fileID,
+    function: String = #function,
+    line: UInt = #line
+  ) {
+    self.error("🛑 Error 🛑: \(message()) ©️", metadata: nil, source: nil, file: file, function: function, line: line)
+  }
+
+  @inlinable
+  public func debug(
+    _ message: @autoclosure () -> Logger.Message,
+    file: String = #fileID,
+    function: String = #function,
+    line: UInt = #line
+  ) {
+    self.debug("🟢 Debug 🟢: \(message()) ©️", metadata: nil, source: nil, file: file, function: function, line: line)
   }
 }
 
+extension DependencyValues {
+  var logger: Logger {
+    get { self[Logger.self] }
+    set { self[Logger.self] = newValue }
+  }
+}
 
+extension Logger: DependencyKey {
+  public static var liveValue: Logging.Logger {
+    var logger = Logger.init(label: "logger")
+    logger.logLevel = .debug
+    return logger
+  }
+}

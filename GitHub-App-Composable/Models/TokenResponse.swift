@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - TokenResponse
-struct TokenResponse: Codable {
+struct TokenResponse: Codable, Equatable {
   let accessToken, scope, tokenType: String
   let expiresIn: Int
   let refreshToken: String
