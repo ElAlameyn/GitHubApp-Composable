@@ -16,7 +16,7 @@ struct Repository: Equatable, Hashable {
 
 struct SearchReducer: ReducerProtocol {
   struct State: Equatable {
-    var repositories: [Repository] = []
+    var repositories: [Repository] = Array<Repository>.init(repeating: .init(name: "MOck", stargazersCount: 1), count: 10)
     var isSearchFieldAppeared = false
     var isEmptySearchResponse = false
     @BindingState var isSearching = false
@@ -69,7 +69,7 @@ struct SearchReducer: ReducerProtocol {
         case .binding: return .none
 
         case .onAppear: break
-          
+
         case .searchResponse(.success(let response)):
           state.isEmptySearchResponse = response.items.isEmpty
 
@@ -79,11 +79,9 @@ struct SearchReducer: ReducerProtocol {
               stargazersCount: $0.stargazersCount ?? 0
             )
           }
-          return .none
         case .searchResponse(.failure(let error)):
           print("Error: \(error.localizedDescription)")
           state.repositories = []
-          return .none
       }
       return .none
     }

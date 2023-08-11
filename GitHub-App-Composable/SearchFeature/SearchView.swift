@@ -15,16 +15,15 @@ struct SearchView: View {
 
   @Environment(\.dismiss) var dismiss
 
-  func shouldDisplayGear(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool { !viewStore.isSearchFieldAppeared }
+  private func shouldDisplayGear(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool { !viewStore.isSearchFieldAppeared }
 
-  func shouldDisplaySearchedRepos(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
+  private func shouldDisplaySearchedRepos(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
     !viewStore.repositories.isEmpty && !viewStore.isSearching
   }
 
-  func shouldDisplayEmptyResponseMessage(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
+  private func shouldDisplayEmptyResponseMessage(_ viewStore: ViewStoreOf<SearchReducer>) -> Bool {
     !viewStore.isSearching || viewStore.searchTextFieldText.isEmpty
   }
-
 
   var body: some View {
     WithViewStore(self.store) { viewStore in
@@ -39,6 +38,9 @@ struct SearchView: View {
               .frame(width: 40, height: 40)
           }
           .padding()
+          .onAppear {
+            print("hi")
+          }
 
           TextField("Text", text: viewStore
             .binding(\.$searchTextFieldText)
@@ -60,6 +62,9 @@ struct SearchView: View {
                   .fixedSize(horizontal: false, vertical: true)
               }
             }
+            .onAppear {
+              print("hi")
+            }
 
           !viewStore.isSearchFieldAppeared ? Spacer() : Spacer(minLength: 30)
 
@@ -73,6 +78,22 @@ struct SearchView: View {
                 .frame(width: 45, height: 45)
             }
             .padding()
+          }
+        }
+
+        if isSearchingFocused {
+
+          VStack {
+            ForEach(0 ..< 3) { id in
+
+              Button {
+                print("Tapped")
+              } label: {
+                Text("buenos tardes man \(id)")
+                  .padding()
+              }
+            }
+            .foregroundColor(.red)
           }
         }
 
@@ -90,11 +111,11 @@ struct SearchView: View {
                 }
             }
           }
+          .zIndex(0)
           .scrollContentBackground(.hidden)
           .listStyle(.grouped)
           .padding(.top, -10)
-        }
-        else if shouldDisplayEmptyResponseMessage(viewStore) {
+        } else if shouldDisplayEmptyResponseMessage(viewStore) {
           Spacer()
           Text(!viewStore.isEmptySearchResponse ? "Try to find some repos!" : "There is no repos with that name.")
             .font(.title2.bold())
@@ -112,10 +133,8 @@ struct SearchView: View {
       .foregroundColor(.white)
       .navigationBarHidden(true)
       .background(Color.black.opacity(0.8))
-      .onAppear { //        viewStore.send(.onAppear) }
-      }
     }
-  }
+  } // ViewStore
 }
 
 struct SearchView_Previews: PreviewProvider {
@@ -123,4 +142,3 @@ struct SearchView_Previews: PreviewProvider {
     SearchView(store: Store(initialState: .init(), reducer: SearchReducer()))
   }
 }
-

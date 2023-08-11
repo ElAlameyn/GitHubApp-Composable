@@ -57,6 +57,7 @@ struct AppView: View {
         }
       )
     }
+    .alert(store.scope(state: \.alert, action: AppReducer.Action.alert), dismiss: .dismiss)
     .onAppear {
       viewStore.send(.checkIfTokenExpired)
     }

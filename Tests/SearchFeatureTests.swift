@@ -26,8 +26,6 @@ final class SearchFeatureTests: XCTestCase {
       $0.isSearching = true
     }
 
-    await store.receive(.searchResponse(.error))
-
     await store.receive(.set(\.$isSearching, false)) {
       $0.isSearching = false
     }

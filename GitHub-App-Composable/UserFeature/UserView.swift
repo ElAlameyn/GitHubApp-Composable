@@ -115,7 +115,6 @@ struct UserView: View {
 
         .onAppear { viewStore.send(.onAppear) }
         .blackTheme()
-        .alert(self.store.scope(state: \.alert), dismiss: .dismissAlert)
       }
       .foregroundColor(Color.white)
       .navigationBarTitleDisplayMode(.large)

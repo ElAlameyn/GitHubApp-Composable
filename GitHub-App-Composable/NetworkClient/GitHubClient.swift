@@ -50,6 +50,7 @@ struct GitHubClient<V: TargetType> {
                 continuation.resume(throwing: error)
               }
             case let .failure(error):
+              print(error)
               continuation.resume(throwing: error)
           }
         }

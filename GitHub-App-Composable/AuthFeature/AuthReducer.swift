@@ -31,7 +31,8 @@ struct AuthReducer: ReducerProtocol {
 
   func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
     switch action {
-      case .authorizedWith: break
+      case .authorizedWith:
+        break
 
       case let .tokenResponse(.success(response)):
         state.isAuthorized = true
@@ -40,7 +41,6 @@ struct AuthReducer: ReducerProtocol {
       case let .tokenResponse(.failure(error)):
         state.isAuthorized = false
         // TODO: Add error handling
-        print(error.localizedDescription)
       case .authorize:
         return .run { send in
           let value = await saveClient.preloadSecrets("BlobTag")
@@ -48,6 +48,7 @@ struct AuthReducer: ReducerProtocol {
         }
 
       case let .onSuccessPreload(creds):
+
         state.oauth = .init(
           consumerKey: creds.clientId,
           consumerSecret: creds.clientSecret,

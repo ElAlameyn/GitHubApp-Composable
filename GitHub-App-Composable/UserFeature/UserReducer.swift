@@ -74,12 +74,6 @@ struct UserReducer: ReducerProtocol {
         case .authUserRepositoriesResponse(.failure(let error)),
              .authUserAccountResponse(.failure(let error)):
 
-          state.alert = AlertState(
-            title: TextState("Ooops! Some error occured"),
-            message: .init(error.localizedDescription),
-            dismissButton: .default(TextState("Ok"), action: .send(.dismissAlert))
-          )
-
           tryLoadCachedReposFrom(&state)
 
         case .binding: break

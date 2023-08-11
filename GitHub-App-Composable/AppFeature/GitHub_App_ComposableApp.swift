@@ -33,11 +33,13 @@ struct GitHub_App_ComposableApp: App {
 //                  initialState: .init(),
 //                  reducer: AuthReducer()))
 
-
+//
       AppView(store:
         .init(
           initialState: AppReducer.State(),
           reducer: AppReducer()
+            .dependency(\.saveClient, .liveValue)
+            .dependency(\.gitHubClient, .failValue)
         )
       )
 
